@@ -1,19 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
-using WebApi.Models;
+using WeatherAggregator.Core;
+using WeatherAggregator.Core.Entities;
+using WeatherAggregator.WebApi.Models;
 
-namespace WebApi.Controllers
+namespace WeatherAggregator.WebApi.Controllers
 {
     public class WeatherController : ApiController
     {
-        public List<Source> GetSources()
+        private readonly CoreFacade _facade = new CoreFacade();
+
+        public List<SourceModel> GetSources()
         {
-            return new List<Source> { new Source { } };
+            return _facade.GetSources().Select(SourceModel.Map).ToList();
         }
 
-        public Weather GetWeather(List<int> sources, DateRange dateRange, Location location)
+        public List<Weather> GetWeather(List<Guid> sources, DateRange dateRange, Location location)
         {
-            return new Weather();
+            return _facade.GetWeather(sources, dateRange, location);
+        }
+
+        ~WeatherController()
+        {
+            _facade.Dispose();
         }
     }
 }
