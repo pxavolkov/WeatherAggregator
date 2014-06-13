@@ -1,0 +1,8 @@
+bin
+obj
+TestResults
+*.suo
+*.DotSettings.user
+*.log
+*.user
+*.cache
