@@ -111,6 +111,10 @@
       <Project>{9e14ff30-e237-40ce-a993-4dccc8af9caa}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sources\Sources.csproj">
+      <Project>{2a16ae16-6048-4875-9f44-d885d8504b3b}</Project>
+      <Name>Sources</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -18,6 +18,7 @@ namespace WeatherAggregator.Core
             _sourceTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
                 .Where(iSource.IsAssignableFrom)
+                .Where(t => !t.IsInterface)
                 .ToList();
         }
 
