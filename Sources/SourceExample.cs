@@ -42,6 +42,11 @@ namespace Sources
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            
+        }
     }
 }
 
