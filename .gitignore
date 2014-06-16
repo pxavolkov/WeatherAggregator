@@ -6,3 +6,4 @@ TestResults
 *.log
 *.user
 *.cache
+Secret.config

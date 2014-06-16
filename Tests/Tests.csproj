@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ForecastioTests.cs" />
+    <Compile Include="GismeteoTests.cs" />
     <Compile Include="OpenWeatherMapSourceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

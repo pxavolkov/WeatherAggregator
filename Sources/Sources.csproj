@@ -47,13 +47,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ForecastioSource.cs" />
+    <Compile Include="SourceExample.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OpenWeatherMap\OpenWeatherMapSource.cs" />
     <Compile Include="OpenWeatherMap\Api\Summary.cs" />
     <Compile Include="OpenWeatherMap\Api\Temperature.cs" />
     <Compile Include="OpenWeatherMap\Api\WeatherItem.cs" />
     <Compile Include="OpenWeatherMap\Api\WeatherResponse.cs" />
-    <Compile Include="SourceExample.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GismeteoSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

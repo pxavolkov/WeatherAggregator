@@ -12,7 +12,7 @@ namespace Tests
         public void GetWeatherTest()
         {
             var f = new ForecastioSource();
-            var res = f.GetWeather(new DateRange { From = DateTime.Now, To = DateTime.Now.AddDays(1) }, new Location { Latitude = 37.8267f, Longitude = -122.423f });
+            var res = f.GetWeather(new DateRange { From = new DateTime(2008, 04, 12, 12, 53, 0), To = new DateTime(2008, 04, 12, 12, 53, 0) }, new Location { Latitude = 50f, Longitude = 50f });
             Assert.IsNotEmpty(res);
         }
     }
