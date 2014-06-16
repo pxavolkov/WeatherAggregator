@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Forecast.io</id>
+    <version>1.0.8</version>
+    <authors>charl.cilliers</authors>
+    <owners>charl.cilliers</owners>
+    <projectUrl>https://github.com/f0xy/forecast.io-csharp</projectUrl>
+    <iconUrl>https://forecast.io/images/icons/144.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>C# Wrapper Library For Forecast.io</description>
+    <releaseNotes>API Update; WebClient Encoding Update</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>Forecast.io Forecastio</tags>
+  </metadata>
+</package>

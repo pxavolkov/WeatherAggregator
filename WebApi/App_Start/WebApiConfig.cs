@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace WebApi
+namespace WeatherAggregator.WebApi.App_Start
 {
     public static class WebApiConfig
     {
@@ -23,6 +22,9 @@ namespace WebApi
             // To disable tracing in your application, please comment out or remove the following line of code
             // For more information, refer to: http://www.asp.net/web-api
             config.EnableSystemDiagnosticsTracing();
+
+            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(
+             new IsoDateTimeConverter());
         }
     }
 }
