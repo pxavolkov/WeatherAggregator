@@ -59,7 +59,7 @@ namespace WeatherAggregator.Sources.OpenWeatherMap
                     {
                         Cloudness = item.clouds,
                         Date = date.Date,
-                        Temperature = (item.temp.max + item.temp.min) / 2,
+                        Temperature = (item.temp.max + item.temp.min) / 2 - 273.15, //Take average and convert from Kelvin to Celsius
                         Precipitation = GetPrecipitation(item.weather.Select(w => w.id))
                     };
 
