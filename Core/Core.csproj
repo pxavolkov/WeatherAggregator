@@ -36,7 +36,6 @@
     <Compile Include="Entities\Precipitation.cs" />
     <Compile Include="Entities\Weather.cs" />
     <Compile Include="Interfaces\ISource.cs" />
-    <Compile Include="Interfaces\SourceException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logic\WeatherProvider.cs" />
   </ItemGroup>
