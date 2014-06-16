@@ -21,7 +21,8 @@ namespace WeatherAggregator.WebApi.Controllers
         [HttpPost]
         public List<Weather> GetWeather(WeatherRequest request)
         {
-            return _facade.GetWeather(request.Sources, request.DateRange, request.Location);
+            var result = _facade.GetWeather(request.Sources, request.DateRange, request.Location);
+            return result;
         }
 
         ~WeatherController()
