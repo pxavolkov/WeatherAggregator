@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ForecastioSource.cs" />
+    <Compile Include="GismeteoSource.cs" />
     <Compile Include="SourceExample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
