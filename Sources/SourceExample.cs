@@ -10,7 +10,7 @@ namespace Sources
 {
     public class SourceExample : ISource
     {
-        private static string apiKey = "";
+        private static string apiKey = "f092c4cfee90a377";
             
 
         #region Public Properties
