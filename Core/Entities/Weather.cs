@@ -7,5 +7,6 @@ namespace WeatherAggregator.Core.Entities
         public DateTime Date { get; set; }
         public float Temperature { get; set; }
         public int Cloudness { get; set; }
+        public Precipitation Precipitation { get; set; }
     }
 }
