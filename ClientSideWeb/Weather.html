@@ -10,29 +10,30 @@
     <script src="ThirdParty/angular.min.js"></script>
     <script src="ThirdParty/Foundation/js/foundation.min.js"></script>
     <script src="ThirdParty/Foundation/js/vendor/modernizr.js"></script>
-    <script src="Scripts/weather.js"></script>
     <script src="Scripts/weather.proxy.js"></script>
+    <script src="Scripts/weather.js"></script>
   </head>
 <body ng-controller="WeatherController">
     <div class="row">
         <div class="large-12 columns">
-            <h1>Прювейт! :)</h1>
+            <h1>Погода для тебя бесплатно без смс без регистрации</h1>
         </div>
     </div>
     <div class="row">
-          <div class="large-6 medium-6 columns">
+        <div class="large-6 medium-6 columns">
             <div class="callout panel">
                 <div ng-repeat="source in sources">
                     <input type="checkbox" id="site{{source.Id}}" data-id="{{source.Id}}" checked="checked" />
                     <label for="site{{source.Id}}">{{source.Name}}</label>
                 </div>
             </div>
-          </div>
-          <div class="large-6 medium-6 columns">
-            <div class="callout panel">
-              <button class="medium success button" ng-click="getWeather()">Check weather!</button>
-            </div>
-          </div>
         </div>
+        <div class="large-6 medium-6 columns">
+            <div class="callout panel">
+                <button class="medium success button" ng-click="getWeather()">Check weather!</button>
+            </div>
+        </div>
+        <p>Судя по точности прогнозов, в ГидроМетЦентре, "мет" может означать "метамфетамин"</p>
+    </div>
 </body>
 </html>

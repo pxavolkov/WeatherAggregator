@@ -1,32 +1,17 @@
-﻿window.weatherAggregator = {
+﻿weatherAggregator.weatherPage = {
     init: function () {
 
-        weatherAggregator.proxy.getSources(weatherAggregator.onGetSources);
-    },
-
-    onGetSources: function() {
         var weatherApp = angular.module('weatherApp', []);
 
         weatherApp.controller('WeatherController', function ($scope) {
-            $scope.sources = [
-              {
-                  Id: "123",
-                  Name: 'GisMeteo'
-              },
-              {
-                  Id: "1234",
-                  Name: 'Site1'
-              },
-              {
-                  Id: "12345",
-                  Name: 'Site2'
-              }
-            ];
+            weatherAggregator.proxy.getSources(function (response) {
+                $scope.$apply(function() { $scope.sources = response; });
+            });
 
-            $scope.getWeather = function() {
+            $scope.getWeather = function () {
                 alert("The weather is good!");
             };
         });
     }
 };
-$(weatherAggregator.init());
+$(weatherAggregator.weatherPage.init());
