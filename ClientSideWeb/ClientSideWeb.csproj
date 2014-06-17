@@ -60,6 +60,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\weather.utils.js" />
+    <Content Include="ThirdParty\angular.js" />
     <Content Include="ThirdParty\angular.min.js" />
     <Content Include="ThirdParty\Foundation\css\foundation.css" />
     <Content Include="ThirdParty\Foundation\css\foundation.min.css" />
@@ -88,7 +90,7 @@
     <Content Include="ThirdParty\Foundation\js\vendor\modernizr.js" />
     <Content Include="ThirdParty\Foundation\js\vendor\placeholder.js" />
     <Content Include="Scripts\weather.proxy.js" />
-    <Content Include="ThirdParty\jquery-2.1.1.min.js" />
+    <Content Include="ThirdParty\jquery-1.11.1.min.js" />
     <Content Include="Weather.html" />
     <Content Include="Scripts\weather.js" />
   </ItemGroup>

@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Погодный агрегатор</title>
-    <link rel="stylesheet" href="ThirdParty/Foundation/css/foundation.css"  type="text/css"/>
-    <script src="ThirdParty/jquery-2.1.1.min.js"></script>
-    <script src="ThirdParty/angular.min.js"></script>
+    <link rel="stylesheet" href="ThirdParty/Foundation/css/foundation.css" type="text/css"/>
+    <script src="ThirdParty/angular.js"></script>
+    <script src="ThirdParty/jquery-1.11.1.min.js"></script>
     <script src="ThirdParty/Foundation/js/foundation.min.js"></script>
-    <script src="ThirdParty/Foundation/js/vendor/modernizr.js"></script>
     <script src="Scripts/weather.proxy.js"></script>
+    <script src="Scripts/weather.utils.js"></script>
     <script src="Scripts/weather.js"></script>
   </head>
 <body ng-controller="WeatherController">
@@ -20,20 +20,34 @@
         </div>
     </div>
     <div class="row">
-        <div class="large-6 medium-6 columns">
-            <div class="callout panel">
+        <div class="large-4 columns">
+            <div class="callout panel" id="sourcesDiv">
                 <div ng-repeat="source in sources">
-                    <input type="checkbox" id="site{{source.Id}}" data-id="{{source.Id}}" checked="checked" />
+                    <input type="checkbox" id="site{{source.Id}}" data-sourceId="{{source.Id}}" checked="checked" />
                     <label for="site{{source.Id}}">{{source.Name}}</label>
                 </div>
             </div>
         </div>
-        <div class="large-6 medium-6 columns">
+        <div class="large-8 columns">
             <div class="callout panel">
-                <button class="medium success button" ng-click="getWeather()">Check weather!</button>
+                <button class="medium success button" ng-click="getWeather()">Посмотреть прогноз</button>
+                <ul class="tabs">
+                    <li class="tab-title active"><a href="#panel2-0" id="tabDay0">Сегодня</a></li>
+                    <li class="tab-title"><a href="#panel2-1" id="tabDay1">Завтра</a></li>
+                    <li class="tab-title"><a href="#panel2-2" id="tabDay2">Послезавтра</a></li>
+                    <li class="tab-title"><a href="#panel2-3" id="tabDay3">Послепослезавтра</a></li> 
+                </ul>
+                <div class="tabs-content">
+                        <div class="content {{weather.active}}" id="panel2-{{weather.index}}" ng-repeat="weather in weatherModels">
+                            <p>Температура: {{weather.Temperature}}</p> 
+                            <p>Облачность: {{weather.Cloudness}}%</p> 
+                            <p>Осадки: {{weather.Precipitation}}</p> 
+                        </div>
+                </div>
             </div>
         </div>
         <p>Судя по точности прогнозов, в ГидроМетЦентре, "мет" может означать "метамфетамин"</p>
+        <div style="position:absolute;left:0;top:0;display:none; width: 100%; height: 100%; color: gray; z-index:100;background: none repeat scroll 0 0 rgba(0, 20, 50, 0.5);" id="waiterDiv"></div>
     </div>
 </body>
 </html>
