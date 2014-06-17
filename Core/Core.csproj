@@ -32,7 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Aspects\MethodLog.cs" />
-    <Compile Include="Aspects\WeatherSourceLog.cs" />
     <Compile Include="CoreFacade.cs" />
     <Compile Include="Entities\DateRange.cs" />
     <Compile Include="Entities\Location.cs" />

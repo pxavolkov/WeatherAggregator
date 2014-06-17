@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using PostSharp.Aspects;
 
 namespace WeatherAggregator.Core.Aspects
@@ -7,6 +8,13 @@ namespace WeatherAggregator.Core.Aspects
     [Serializable]
     public class MethodLog : OnMethodBoundaryAspect
     {
+        private readonly Type _target;
+
+        public MethodLog(Type target = null)
+        {
+            _target = target;
+        }
+
         public override void OnEntry(MethodExecutionArgs args)
         {
             if (!args.Method.IsSpecialName) //Skip constructor, properties
@@ -21,6 +29,18 @@ namespace WeatherAggregator.Core.Aspects
         public override void OnException(MethodExecutionArgs args)
         {
             Logger.Error(args.Exception);
+        }
+
+        public override bool CompileTimeValidate(MethodBase method)
+        {
+            bool result = false;
+
+            if (_target != null)
+            {
+                result = _target.IsAssignableFrom(method.DeclaringType);
+            }
+
+            return result;
         }
     }
 }
