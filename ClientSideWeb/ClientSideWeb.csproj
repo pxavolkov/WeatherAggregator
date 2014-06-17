@@ -60,37 +60,43 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Foundation\css\foundation.css" />
-    <Content Include="Foundation\css\foundation.min.css" />
-    <Content Include="Foundation\css\normalize.css" />
-    <Content Include="Foundation\js\foundation.min.js" />
-    <Content Include="Foundation\js\foundation\foundation.abide.js" />
-    <Content Include="Foundation\js\foundation\foundation.accordion.js" />
-    <Content Include="Foundation\js\foundation\foundation.alert.js" />
-    <Content Include="Foundation\js\foundation\foundation.clearing.js" />
-    <Content Include="Foundation\js\foundation\foundation.dropdown.js" />
-    <Content Include="Foundation\js\foundation\foundation.equalizer.js" />
-    <Content Include="Foundation\js\foundation\foundation.interchange.js" />
-    <Content Include="Foundation\js\foundation\foundation.joyride.js" />
-    <Content Include="Foundation\js\foundation\foundation.js" />
-    <Content Include="Foundation\js\foundation\foundation.magellan.js" />
-    <Content Include="Foundation\js\foundation\foundation.offcanvas.js" />
-    <Content Include="Foundation\js\foundation\foundation.orbit.js" />
-    <Content Include="Foundation\js\foundation\foundation.reveal.js" />
-    <Content Include="Foundation\js\foundation\foundation.slider.js" />
-    <Content Include="Foundation\js\foundation\foundation.tab.js" />
-    <Content Include="Foundation\js\foundation\foundation.tooltip.js" />
-    <Content Include="Foundation\js\foundation\foundation.topbar.js" />
-    <Content Include="Foundation\js\vendor\fastclick.js" />
-    <Content Include="Foundation\js\vendor\jquery.cookie.js" />
-    <Content Include="Foundation\js\vendor\jquery.js" />
-    <Content Include="Foundation\js\vendor\modernizr.js" />
-    <Content Include="Foundation\js\vendor\placeholder.js" />
-    <Content Include="jquery-2.1.1.min.js" />
+    <Content Include="ThirdParty\angular.min.js" />
+    <Content Include="ThirdParty\Foundation\css\foundation.css" />
+    <Content Include="ThirdParty\Foundation\css\foundation.min.css" />
+    <Content Include="ThirdParty\Foundation\css\normalize.css" />
+    <Content Include="ThirdParty\Foundation\js\foundation.min.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.abide.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.accordion.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.alert.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.clearing.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.dropdown.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.equalizer.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.interchange.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.joyride.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.magellan.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.offcanvas.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.orbit.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.reveal.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.slider.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.tab.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.tooltip.js" />
+    <Content Include="ThirdParty\Foundation\js\foundation\foundation.topbar.js" />
+    <Content Include="ThirdParty\Foundation\js\vendor\fastclick.js" />
+    <Content Include="ThirdParty\Foundation\js\vendor\jquery.cookie.js" />
+    <Content Include="ThirdParty\Foundation\js\vendor\jquery.js" />
+    <Content Include="ThirdParty\Foundation\js\vendor\modernizr.js" />
+    <Content Include="ThirdParty\Foundation\js\vendor\placeholder.js" />
+    <Content Include="Scripts\weather.proxy.js" />
+    <Content Include="ThirdParty\jquery-2.1.1.min.js" />
     <Content Include="Weather.html" />
+    <Content Include="Scripts\weather.js" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Foundation\img\.gitkeep" />
+    <Content Include="ThirdParty\Foundation\img\.gitkeep" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\weather.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
