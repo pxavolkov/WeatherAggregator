@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Http;
 using WeatherAggregator.Core;
@@ -10,7 +11,7 @@ namespace WeatherAggregator.WebApi.Controllers
 {
     public class WeatherController : ApiController
     {
-        private readonly CoreFacade _facade = new CoreFacade();
+        private readonly CoreFacade _facade = CreateCoreFacade();
 
         [HttpGet]
         public List<SourceModel> Sources()
@@ -28,6 +29,16 @@ namespace WeatherAggregator.WebApi.Controllers
         ~WeatherController()
         {
             _facade.Dispose();
+        }
+
+        private static CoreFacade CreateCoreFacade()
+        {
+            var settings = new Settings
+            {
+                CacheRepositoryFactory = () => DataAccess.InMemory.CacheRepository.Instance,
+                WeatherCacheTimeoutSeconds = int.Parse(ConfigurationManager.AppSettings["WeatherCacheTimeoutSeconds"])
+            };
+            return new CoreFacade(settings);
         }
     }
 }

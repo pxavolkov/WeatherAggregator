@@ -31,12 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Aspects\MethodLog.cs" />
+    <Compile Include="Aspects\MethodCacheAttribute.cs" />
+    <Compile Include="Aspects\MethodLogAttribute.cs" />
     <Compile Include="CoreFacade.cs" />
     <Compile Include="Entities\DateRange.cs" />
     <Compile Include="Entities\Location.cs" />
     <Compile Include="Entities\Precipitation.cs" />
+    <Compile Include="Entities\Settings.cs" />
     <Compile Include="Entities\Weather.cs" />
+    <Compile Include="Interfaces\ICacheRepository.cs" />
     <Compile Include="Interfaces\ISource.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

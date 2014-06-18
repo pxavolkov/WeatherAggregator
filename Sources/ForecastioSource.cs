@@ -30,7 +30,12 @@ namespace Sources
                     var dailyForecast = response.daily.data[0];
                     var temp = (dailyForecast.apparentTemperatureMax + dailyForecast.apparentTemperatureMin)/2;
                     var cloudCover = (int)(dailyForecast.cloudCover * 100);
-                    var w = new Weather { Date = day.Date, Temperature = temp, Cloudness = cloudCover };
+                    var precip = Precipitation.None;
+                    if (dailyForecast.precipIntensity > 50)
+                    {
+                        precip = temp > 0 ? Precipitation.Rain : Precipitation.Snow;
+                    }
+                    var w = new Weather { Date = day.Date, Temperature = temp, Cloudness = cloudCover, Precipitation = precip};
                     result.Add(w);
                 }
                 day = day.AddDays(1);
