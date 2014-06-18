@@ -20,7 +20,8 @@ namespace WeatherAggregator.Core.Logic
             {
                 Temperature = (int) g.Average(r => r.Temperature),
                 Cloudness = (int) g.Average(r => r.Cloudness),
-                Precipitation = (Precipitation) (int) g.Average(r => (int) r.Precipitation)
+                Precipitation = (Precipitation) (int) g.Average(r => (int) r.Precipitation),
+                Date = g.Key
             }).ToList();
         }
     }

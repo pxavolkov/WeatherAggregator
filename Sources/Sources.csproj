@@ -7,10 +7,11 @@
     <ProjectGuid>{2A16AE16-6048-4875-9F44-D885D8504B3B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sources</RootNamespace>
+    <RootNamespace>WeatherAggregator.Sources</RootNamespace>
     <AssemblyName>Sources</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <DontImportPostSharp>True</DontImportPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,9 +34,18 @@
     <Reference Include="Forecast.io.45">
       <HintPath>..\packages\Forecast.io.1.0.8\lib\net45\Forecast.io.45.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp">
+      <HintPath>..\packages\PostSharp.3.1.44\lib\net20\PostSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,9 +54,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ForecastioSource.cs" />
-    <Compile Include="GismeteoSource.cs" />
-    <Compile Include="SourceExample.cs" />
+    <Compile Include="WeatherUndergroundSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="OpenWeatherMap\OpenWeatherMapSource.cs" />
+    <Compile Include="OpenWeatherMap\Api\Summary.cs" />
+    <Compile Include="OpenWeatherMap\Api\Temperature.cs" />
+    <Compile Include="OpenWeatherMap\Api\WeatherItem.cs" />
+    <Compile Include="OpenWeatherMap\Api\WeatherResponse.cs" />
+    <Compile Include="GismeteoSource.cs" />
+    <Compile Include="WeatherUnderground\DataExtractor.cs" />
+    <Compile Include="WeatherUnderground\WeatherUndergroudEntities.cs" />
     <Compile Include="WeatheruaCity.cs" />
     <Compile Include="WeatheruaSource.cs" />
   </ItemGroup>
@@ -55,11 +72,20 @@
       <Project>{9E14FF30-E237-40CE-A993-4DCCC8AF9CAA}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{E9474FCA-3783-4FB7-96CC-D93E16097C2F}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\PostSharp.3.1.44\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.3.1.44\tools\PostSharp.targets')" />
+  <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
+    <Error Condition="!Exists('..\packages\PostSharp.3.1.44\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
+    <Error Condition="Exists('..\packages\PostSharp.3.1.44\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,6 +1,5 @@
 ﻿using System.Web.Http;
 using WeatherAggregator.WebApi.App_Start;
-using WebApi;
 
 namespace WeatherAggregator.WebApi
 {
