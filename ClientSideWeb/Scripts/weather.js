@@ -1,5 +1,4 @@
 ﻿weatherAggregator.weatherPage = {
-
     initWeatherApp: function() {
 
             var weatherApp = angular.module('weatherApp', []);
@@ -50,6 +49,7 @@
                 element.index = index;
                 element.active = index == 0 ? "active" : "";
                 element.Precipitation = weatherAggregator.utils.getPrecipitation(element.Precipitation);
+                element.CloudIcon = weatherAggregator.utils.getCloudIconUrl(element.Cloudness);
             });
             var $scope = angular.element($("body")).scope();
             $scope.$apply(function() { $scope.weatherModels = data; });

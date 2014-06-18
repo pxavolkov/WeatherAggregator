@@ -60,6 +60,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\Cloud.png" />
+    <Content Include="Images\Sun.png" />
+    <Content Include="Images\SunCloud.png" />
     <Content Include="Scripts\weather.utils.js" />
     <Content Include="ThirdParty\angular.js" />
     <Content Include="ThirdParty\angular.min.js" />
