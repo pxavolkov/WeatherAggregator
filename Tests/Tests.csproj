@@ -45,6 +45,7 @@
     <Compile Include="ForecastioTests.cs" />
     <Compile Include="GismeteoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WeatheruaTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
