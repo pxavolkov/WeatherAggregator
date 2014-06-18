@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Net;
 using System.Web.Script.Serialization;
-using Newtonsoft.Json;
 using WeatherAggregator.Core.Entities;
 using WeatherAggregator.Core.Interfaces;
 using WeatherAggregator.Sources.WeatherUnderground;
