@@ -1,17 +1,13 @@
 ﻿weatherAggregator.weatherPage = {
+
     initWeatherApp: function() {
 
             var weatherApp = angular.module('weatherApp', []);
 
             weatherApp.controller('WeatherController', function($scope) {
                 weatherAggregator.proxy.getSources(function(response) {
-                    $scope.$apply(function() {
-                        $scope.sources = response;
+                    $scope.$apply(function() { $scope.sources = response; });
                 });
-
-                });
-
-                $scope.weatherModels = [{ index: 0 }, { index: 1}, { index: 2 }, { index: 3 }];
 
                 $scope.getWeather = weatherAggregator.weatherPage.getWeather;
             });
@@ -20,14 +16,6 @@
     init: function (){
         $("#tabDay2").text(weatherAggregator.utils.getDayOfWeek(2));
         $("#tabDay3").text(weatherAggregator.utils.getDayOfWeek(3));
-
-        $("#tabsDiv").on('click', "a[id^='tabDay']", function () {
-            $("[id^='contenttabDay']").removeClass('active');
-            var location = "[id$='content" + $(this).attr('id') + "']";
-            $(location).addClass('active');
-            $(".tab-title").removeClass('active');
-            $(this).parent().addClass('active');
-        });
     },
 
     getWeather: function () {
@@ -62,16 +50,12 @@
                 element.index = index;
                 element.active = index == 0 ? "active" : "";
                 element.Precipitation = weatherAggregator.utils.getPrecipitation(element.Precipitation);
-                element.CloudIcon = weatherAggregator.utils.getCloudIconUrl(element.Cloudness);
-                element.day = weatherAggregator.utils.getDay(index);
             });
             var $scope = angular.element($("body")).scope();
-            $scope.$apply(function () { $scope.weatherModels = data; });
-            $("#tabsDiv").removeClass('hidden');
+            $scope.$apply(function() { $scope.weatherModels = data; });
         }
         weatherAggregator.utils.hideWaiter();
     }
 };
-
 weatherAggregator.weatherPage.initWeatherApp();
 $(weatherAggregator.weatherPage.init);
