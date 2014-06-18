@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using WeatherAggregator.Core.Aspects;
 using WeatherAggregator.Core.Entities;
 using WeatherAggregator.Core.Interfaces;
 using WeatherAggregator.Core.Logic;
@@ -22,13 +23,16 @@ namespace WeatherAggregator.Core
                 .ToList();
         }
 
-        public CoreFacade()
+        public CoreFacade(Settings settings)
         {
             foreach (var sourceType in _sourceTypes)
             {
                 var source = (ISource) Activator.CreateInstance(sourceType);
                 _sources.Add(source);
             }
+
+            MethodCacheAttribute.CacheRepositoryFactory = settings.CacheRepositoryFactory;
+            MethodCacheAttribute.CacheTimeoutSeconds = settings.WeatherCacheTimeoutSeconds;
         }
 
         public List<Weather> GetWeather(List<Guid> sources, DateRange dateRange, Location location)
