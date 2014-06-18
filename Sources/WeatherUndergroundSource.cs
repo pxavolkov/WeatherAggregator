@@ -42,15 +42,12 @@ namespace Sources
 
         #endregion
 
-
-
-        #region Private Methods
-
-
         private string ApiKey
         {
             get { return ConfigurationManager.AppSettings["WeatherUnderGroundIOKey"]; }
         }
+
+        #region Private Methods
 
         private List<Weather> ConvertForecastModel(ThreeDaysForecastModel model)
         {
@@ -69,9 +66,7 @@ namespace Sources
             
             return result;
         }
-
-
-
+        
         private string GetLocationByLatLng(Location location)
         {
 
