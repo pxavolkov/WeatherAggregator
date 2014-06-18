@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Sources;
 using WeatherAggregator.Core.Entities;
+using WeatherAggregator.Sources;
 
 namespace Tests
 {
