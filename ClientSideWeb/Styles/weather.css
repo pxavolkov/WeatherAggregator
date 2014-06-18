@@ -1,0 +1,7 @@
+﻿.hidden {
+    display: none !important;
+}
+
+.tabs-content .content {
+    padding: 10px;
+}
