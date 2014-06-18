@@ -18,9 +18,6 @@
     },
 
     init: function (){
-        $("#tabDay2").text(weatherAggregator.utils.getDayOfWeek(2));
-        $("#tabDay3").text(weatherAggregator.utils.getDayOfWeek(3));
-
         $("#tabsDiv").on('click', "a[id^='tabDay']", function () {
             $("[id^='contenttabDay']").removeClass('active');
             var location = "[id$='content" + $(this).attr('id') + "']";
