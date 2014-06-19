@@ -42,6 +42,14 @@ namespace WeatherAggregator.Sources.OpenWeatherMap
             }
         }
 
+        public int ForecastMaxDays
+        {
+            get
+            {
+                return 16;
+            }
+        }
+
         public List<Weather> GetWeather(DateRange dateRange, Location location)
         {
             var url = string.Format(ApiUri, location.Latitude, location.Longitude);

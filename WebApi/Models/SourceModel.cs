@@ -8,6 +8,7 @@ namespace WeatherAggregator.WebApi.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Snippet { get; set; }
+        public int ForecastMaxDays { get; set; }
 
         public static SourceModel Map(ISource source)
         {
@@ -15,7 +16,8 @@ namespace WeatherAggregator.WebApi.Models
             {
                 Id = source.Id,
                 Name = source.Name,
-                Snippet = source.Snippet
+                Snippet = source.Snippet,
+                ForecastMaxDays = source.ForecastMaxDays
             };
         }
     }
