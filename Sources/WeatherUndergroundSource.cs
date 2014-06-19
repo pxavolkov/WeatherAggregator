@@ -27,8 +27,7 @@ namespace WeatherAggregator.Sources
         {
             // dateRange is not used because method returns forecast for today and three more days
 
-            var locationUrl = GetLocationByLatLng(location);
-            ThreeDaysForecastModel model = ThreeDaysForecast(locationUrl);
+            ThreeDaysForecastModel model = ThreeDaysForecast(location);
             List<Weather> result = ConvertForecastModel(model);
 
             return result;
@@ -61,24 +60,11 @@ namespace WeatherAggregator.Sources
             return result;
         }
         
-        private string GetLocationByLatLng(Location location)
-        {
-
-            using (var client = new WebClient())
-            {
-                string requestUrl = string.Format(@"http://api.wunderground.com/api/{0}/geolookup/q/{1},{2}.json", ApiKey, location.Latitude, location.Longitude);
-                var json = client.DownloadString(requestUrl);
-                var serializer = new JavaScriptSerializer();
-                GeoLookupModel model = serializer.Deserialize<GeoLookupModel>(json);
-                return model.Location.Tz_long;
-            }
-        }
-
-        private ThreeDaysForecastModel ThreeDaysForecast(string locationUrl)
+        private ThreeDaysForecastModel ThreeDaysForecast(Location location)
         {
             using (var client = new WebClient())
             {
-                string requestUrl = string.Format(@"http://api.wunderground.com/api/{0}/forecast/q/{1}.json", ApiKey, locationUrl);
+                string requestUrl = string.Format(@"http://api.wunderground.com/api/{0}/forecast/q/{1},{2}.json", ApiKey, location.Latitude, location.Longitude);
                 var json = client.DownloadString(requestUrl);
                 var serializer = new JavaScriptSerializer();
                 ThreeDaysForecastModel model = serializer.Deserialize<ThreeDaysForecastModel>(json);
