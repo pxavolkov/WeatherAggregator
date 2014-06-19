@@ -84,10 +84,5 @@ namespace WeatherAggregator.Sources.OpenWeatherMap
 
             return result;
         }
-
-        public void Dispose()
-        {
-            
-        }
     }
 }

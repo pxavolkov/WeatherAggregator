@@ -26,11 +26,6 @@ namespace WeatherAggregator.WebApi.Controllers
             return result;
         }
 
-        ~WeatherController()
-        {
-            _facade.Dispose();
-        }
-
         private static CoreFacade CreateCoreFacade()
         {
             var settings = new Settings

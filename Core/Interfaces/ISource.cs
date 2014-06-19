@@ -4,7 +4,7 @@ using WeatherAggregator.Core.Entities;
 
 namespace WeatherAggregator.Core.Interfaces
 {
-    public interface ISource : IDisposable
+    public interface ISource
     {
         Guid Id { get; }
         string Name { get; }

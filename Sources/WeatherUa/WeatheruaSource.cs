@@ -14,10 +14,6 @@ namespace Sources
 {
     public class WeatheruaSource: ISource
     {
-        public void Dispose()
-        {
-        }
-
         public Guid Id { get { return new Guid("F1465F7E-DFAC-4D77-A717-0613B05A5281"); } }
         public string Name { get { return "Weather.ua source"; } }
         public string Snippet { get { return "<a href='weather.ua>Weather.ua</a>"; } }

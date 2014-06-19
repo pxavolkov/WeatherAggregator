@@ -34,11 +34,6 @@ namespace WeatherAggregator.Sources
             return result;
         }
 
-        public void Dispose()
-        {
-
-        }
-
         #endregion
 
         private string ApiKey
