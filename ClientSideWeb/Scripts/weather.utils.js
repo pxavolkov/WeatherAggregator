@@ -28,7 +28,8 @@
         var index = Math.trunc(this.cloudIcons.length * cloudness / 100);
         return {
             icon: this.cloudIcons[index],
-            title: this.cloudTitles[index]
+            title: this.cloudTitles[index],
+            percentage: cloudness
         };
     }
 };
