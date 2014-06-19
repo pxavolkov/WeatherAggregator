@@ -38,7 +38,7 @@ namespace WeatherAggregator.Core
         public List<Weather> GetWeather(List<Guid> sources, DateRange dateRange, Location location)
         {
             var provider = new WeatherProvider(_sources.Where(s => sources.Contains(s.Id)).ToList());
-            return provider.GetWeather(dateRange.Normalize(), location);
+            return provider.GetWeather(dateRange, location);
         }
 
         public IEnumerable<ISource> GetSources()
