@@ -57,34 +57,4 @@ namespace WeatherAggregator.Sources.WeatherUnderground
 
     #endregion
 
-    #region GeoLookup
-    //Model is not complete. Only some fields. JSON contains much more fields, but they are dont needed
-
-    public class GeoLookupModel
-    {
-        public GeoLookupLocation Location { get; set; }
-    }
-
-    public class GeoLookupLocation
-    {
-        public string Type { get; set; }
-        public string Country { get; set; }
-        public string Country_iso3166 { get; set; }
-        public string Country_Name { get; set; }
-        public string State { get; set; }
-        public string City { get; set; }
-        public string Tz_short { get; set; }
-        public string Tz_long { get; set; }
-        public decimal Lat { get; set; }
-        public decimal Lon { get; set; }
-        public int Zip { get; set; }
-        public int Magic { get; set; }
-        public int Wmo { get; set; }
-        public string L { get; set; }
-        public string Requesturl { get; set; }
-        public string Wuiurl { get; set; }
-    }
-    
-    #endregion
-
 }

@@ -1,4 +1,5 @@
 ﻿weatherAggregator.weatherPage = {
+    requestData: {Location: {} },
     initWeatherApp: function() {
 
         var weatherApp = angular.module('weatherApp', []).config(function ($sceProvider) {
@@ -36,12 +37,14 @@
 
         if (!selectedSources.length) {
             alert("Пожалуйста, выберите хотя бы 1 сайт");
+        } else if (weatherAggregator.weatherPage.requestData.Location.Latitude == null || weatherAggregator.weatherPage.requestData.Location.Longitude == null) {
+            alert("Пожалуйста, выберите место на карте");
         } else {
             var data = {
                 Sources: selectedSources,
                 Location: {
-                    Latitude: 44.35,
-                    Longitude: 33.31
+                    Latitude: weatherAggregator.weatherPage.requestData.Location.Latitude,
+                    Longitude: weatherAggregator.weatherPage.requestData.Location.Longitude
                 },
                 DateRange: {
                     From: new Date(),

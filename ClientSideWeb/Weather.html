@@ -14,6 +14,9 @@
     <script src="Scripts/weather.proxy.js"></script>
     <script src="Scripts/weather.utils.js"></script>
     <script src="Scripts/weather.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWHdAr9LSWRs6l1EfLBxOEm1hWU-3rS_8"></script>
+    <script src="Scripts/map.js"> </script>
+
   </head>
 <body ng-controller="WeatherController">
     <div class="row">
@@ -34,6 +37,7 @@
         </div>
         <div class="large-8 columns">
             <div class="callout panel" >
+                <div id="map-canvas" style="width:600px;height: 300px; margin-bottom: 10px"></div>
                 <button class="medium success button" ng-click="getWeather()">Посмотреть прогноз</button>
                 <div class="hidden" id="tabsDiv">
                     <ul class="tabs">
