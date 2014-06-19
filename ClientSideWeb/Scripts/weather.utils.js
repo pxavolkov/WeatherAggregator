@@ -25,7 +25,7 @@
     },
 
     getCloudInfo: function (cloudness) {
-        var index = Math.trunc(this.cloudIcons.length * cloudness / 100);
+        var index = parseInt(this.cloudIcons.length * cloudness / 100, 10);
         return {
             icon: this.cloudIcons[index],
             title: this.cloudTitles[index],
