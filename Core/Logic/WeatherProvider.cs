@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WeatherAggregator.Core.Entities;
 using WeatherAggregator.Core.Interfaces;
@@ -18,7 +19,7 @@ namespace WeatherAggregator.Core.Logic
         {
             var result = _sources.SelectMany(s => s.GetWeather(dateRange, location)).GroupBy(r => r.Date).Select(g => new Weather
             {
-                Temperature = (int) g.Average(r => r.Temperature),
+                Temperature = (int) Math.Round(g.Average(r => r.Temperature)),
                 Cloudness = (int) g.Average(r => r.Cloudness),
                 Precipitation = (Precipitation) (int) g.Average(r => (int) r.Precipitation),
                 Date = g.Key

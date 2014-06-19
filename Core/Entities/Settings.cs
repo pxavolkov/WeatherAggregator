@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using WeatherAggregator.Core.Interfaces;
 
 namespace WeatherAggregator.Core.Entities
@@ -7,5 +8,6 @@ namespace WeatherAggregator.Core.Entities
     {
         public int WeatherCacheTimeoutSeconds;
         public Func<ICacheRepository> CacheRepositoryFactory;
+        public List<ISource> Sources;
     }
 }

@@ -17,6 +17,7 @@ namespace WeatherAggregator.Sources
         public Guid Id { get { return new Guid("b0fce04e-4cd6-4ba9-8e75-4e8f1a51c33e"); } }
         public string Name { get { return "Weather Undergroud API"; } }
         public string Snippet { get { return "<a href='http://http://www.wunderground.com/'>Powered by Weather Underground</a>"; } }
+        public int ForecastMaxDays { get { return 4; } }
 
         #endregion
 

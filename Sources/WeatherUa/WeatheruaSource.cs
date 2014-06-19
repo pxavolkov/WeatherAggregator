@@ -14,9 +14,14 @@ namespace Sources
 {
     public class WeatheruaSource: ISource
     {
+
+        private const string SnippetHtml = "<p><a href='http://www.weather.ua/'><img src='http://www.weather.ua/images/logo-weather-ua.gif' alt='Weather.ua логотип' width='253' height='70'><br /></p>";
+
         public Guid Id { get { return new Guid("F1465F7E-DFAC-4D77-A717-0613B05A5281"); } }
         public string Name { get { return "Weather.ua source"; } }
-        public string Snippet { get { return "<a href='weather.ua>Weather.ua</a>"; } }
+        public string Snippet { get { return SnippetHtml; } }
+        public int ForecastMaxDays { get { return 5; } }
+
         public List<Weather> GetWeather(DateRange dateRange, Location location)
         {
             var result = new List<Weather>();
