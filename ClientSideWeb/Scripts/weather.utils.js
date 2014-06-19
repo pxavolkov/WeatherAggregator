@@ -1,10 +1,16 @@
 ﻿weatherAggregator.utils = {
-    days: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+    recentDays : ["Сегодня", "Завтра"],
+    daysOfWeek: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
     precipitation: ['Без осадков', 'Дождь', 'Снег', 'Град'],
+    cloudIcons: ['Sun.png', 'SunCloud.png', 'Cloud.png'],
+    cloudTitles: ['Солнечно', 'Переменная облачность', 'Пасмурно'],
 
-    getDayOfWeek: function (index) {
+    getDay: function (index) {
+        if (index < 2) {
+            return this.recentDays[index];
+        }
         var currentDayIndex = (new Date()).getDay();
-        return this.days[(currentDayIndex + index) % 7];
+        return this.daysOfWeek[(currentDayIndex + index) % 7];
     },
 
     getPrecipitation: function(index) {
@@ -16,5 +22,14 @@
     },
     hideWaiter: function () {
         $("#waiterDiv").hide();
+    },
+
+    getCloudInfo: function (cloudness) {
+        var index = Math.trunc(this.cloudIcons.length * cloudness / 100);
+        return {
+            icon: this.cloudIcons[index],
+            title: this.cloudTitles[index],
+            percentage: cloudness
+        };
     }
 };

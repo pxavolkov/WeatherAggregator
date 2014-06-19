@@ -61,7 +61,6 @@
     <Compile Include="OpenWeatherMap\Api\Temperature.cs" />
     <Compile Include="OpenWeatherMap\Api\WeatherItem.cs" />
     <Compile Include="OpenWeatherMap\Api\WeatherResponse.cs" />
-    <Compile Include="GismeteoSource.cs" />
     <Compile Include="WeatherUnderground\DataExtractor.cs" />
     <Compile Include="WeatherUnderground\WeatherUndergroudEntities.cs" />
     <Compile Include="WeatherUa\WeatheruaCity.cs" />

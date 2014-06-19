@@ -5,7 +5,7 @@ using ForecastIO;
 using WeatherAggregator.Core.Entities;
 using WeatherAggregator.Core.Interfaces;
 
-namespace Sources
+namespace WeatherAggregator.Sources
 {
     public class ForecastioSource:ISource
     {
@@ -42,10 +42,6 @@ namespace Sources
             }
 
             return result;
-        }
-        public void Dispose()
-        {
-
         }
     }
 }

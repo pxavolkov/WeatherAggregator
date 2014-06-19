@@ -8,7 +8,7 @@ using WeatherAggregator.Core.Logic;
 
 namespace WeatherAggregator.Core
 {
-    public class CoreFacade : IDisposable
+    public class CoreFacade
     {
         private static readonly List<Type> _sourceTypes;
         private readonly List<ISource> _sources = new List<ISource>();
@@ -44,14 +44,6 @@ namespace WeatherAggregator.Core
         public IEnumerable<ISource> GetSources()
         {
             return _sources;
-        }
-
-        public void Dispose()
-        {
-            foreach (var source in _sources)
-            {
-                source.Dispose();
-            }
         }
     }
 }

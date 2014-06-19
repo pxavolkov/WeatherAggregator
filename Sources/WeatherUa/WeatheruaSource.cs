@@ -14,11 +14,8 @@ namespace Sources
 {
     public class WeatheruaSource: ISource
     {
-        private const string SnippetHtml = "<p><a href='http://www.weather.ua/'><img src='http://www.weather.ua/images/logo-weather-ua.gif' alt='Weather.ua логотип' width='253' height='70'><br />(Только на 5 дней)</p>";
 
-        public void Dispose()
-        {
-        }
+        private const string SnippetHtml = "<p><a href='http://www.weather.ua/'><img src='http://www.weather.ua/images/logo-weather-ua.gif' alt='Weather.ua логотип' width='253' height='70'><br />(Только на 5 дней)</p>";
 
         public Guid Id { get { return new Guid("F1465F7E-DFAC-4D77-A717-0613B05A5281"); } }
         public string Name { get { return "Weather.ua source"; } }

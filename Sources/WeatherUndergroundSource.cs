@@ -7,7 +7,7 @@ using WeatherAggregator.Core.Entities;
 using WeatherAggregator.Core.Interfaces;
 using WeatherAggregator.Sources.WeatherUnderground;
 
-namespace Sources
+namespace WeatherAggregator.Sources
 {
     public class WeatherUndergroundSource : ISource
     {
@@ -32,11 +32,6 @@ namespace Sources
             List<Weather> result = ConvertForecastModel(model);
 
             return result;
-        }
-
-        public void Dispose()
-        {
-
         }
 
         #endregion

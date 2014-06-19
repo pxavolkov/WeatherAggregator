@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Погодный агрегатор</title>
     <link rel="stylesheet" href="ThirdParty/Foundation/css/foundation.css" type="text/css"/>
+    <link rel="stylesheet" href="Styles/weather.css" type="text/css"/>
     <script src="ThirdParty/angular.js"></script>
     <script src="ThirdParty/jquery-1.11.1.min.js"></script>
     <script src="ThirdParty/Foundation/js/foundation.min.js"></script>
+    <script src="ThirdParty/Foundation/js/foundation/foundation.tab.js"></script>
     <script src="Scripts/weather.proxy.js"></script>
     <script src="Scripts/weather.utils.js"></script>
     <script src="Scripts/weather.js"></script>
@@ -29,20 +31,19 @@
             </div>
         </div>
         <div class="large-8 columns">
-            <div class="callout panel">
+            <div class="callout panel" >
                 <button class="medium success button" ng-click="getWeather()">Посмотреть прогноз</button>
-                <ul class="tabs">
-                    <li class="tab-title active"><a href="#panel2-0" id="tabDay0">Сегодня</a></li>
-                    <li class="tab-title"><a href="#panel2-1" id="tabDay1">Завтра</a></li>
-                    <li class="tab-title"><a href="#panel2-2" id="tabDay2">Послезавтра</a></li>
-                    <li class="tab-title"><a href="#panel2-3" id="tabDay3">Послепослезавтра</a></li> 
-                </ul>
-                <div class="tabs-content">
-                        <div class="content {{weather.active}}" id="panel2-{{weather.index}}" ng-repeat="weather in weatherModels">
+                <div class="hidden" id="tabsDiv">
+                    <ul class="tabs">
+                        <li class="tab-title {{weather.active}}" ng-repeat="weather in weatherModels"><a href="#panel2-{{weather.index}}" id="tabDay{{weather.index}}">{{weather.day}}</a></li>
+                    </ul>
+                    <div class="tabs-content">
+                        <div class="content {{weather.active}}" id="contenttabDay{{weather.index}}" ng-repeat="weather in weatherModels">
                             <p>Температура: {{weather.Temperature}}</p> 
-                            <p>Облачность: {{weather.Cloudness}}%</p> 
+                            <p>Облачность: <img class="cloudness" src="Images/{{weather.cloudInfo.icon}}" title="{{weather.cloudInfo.title}} - {{weather.cloudInfo.percentage}}%" /></p> 
                             <p>Осадки: {{weather.Precipitation}}</p> 
                         </div>
+                    </div>
                 </div>
             </div>
         </div>

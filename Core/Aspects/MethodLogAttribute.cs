@@ -23,6 +23,13 @@ namespace WeatherAggregator.Core.Aspects
             Logger.Info("Entering method {0} with parameters {1}", methodName, arguments);
         }
 
+        public override void OnSuccess(MethodExecutionArgs args)
+        {
+            var methodName = args.Method.DeclaringType + "." + args.Method.Name;
+
+            Logger.Info("Exited method {0} with result {1}", methodName, args.ReturnValue);
+        }
+
         public override void OnException(MethodExecutionArgs args)
         {
             Logger.Error(args.Exception);
@@ -35,6 +42,7 @@ namespace WeatherAggregator.Core.Aspects
             if (result && _target != null)
             {
                 result = _target.IsAssignableFrom(method.DeclaringType);
+                result &= _target.GetMethods().Select(m => m.Name).Contains(method.Name);
             }
 
             return result;

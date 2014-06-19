@@ -1,0 +1,12 @@
+﻿.hidden {
+    display: none !important;
+}
+
+.tabs-content .content {
+    padding: 10px;
+}
+
+img.cloudness {
+    height: 60px;
+    width: 60px;
+}
