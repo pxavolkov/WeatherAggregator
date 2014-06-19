@@ -10,21 +10,12 @@ namespace WeatherAggregator.Core
 {
     public class CoreFacade
     {
-        private static readonly List<Type> _sourceTypes;
+        private static List<Type> _sourceTypes;
         private readonly List<ISource> _sources = new List<ISource>();
-
-        static CoreFacade()
-        {
-            var iSource = typeof(ISource);
-            _sourceTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(iSource.IsAssignableFrom)
-                .Where(t => !t.IsInterface)
-                .ToList();
-        }
 
         public CoreFacade(Settings settings)
         {
+            LoadSourceTypes();
             foreach (var sourceType in _sourceTypes)
             {
                 var source = (ISource) Activator.CreateInstance(sourceType);
@@ -44,6 +35,16 @@ namespace WeatherAggregator.Core
         public IEnumerable<ISource> GetSources()
         {
             return _sources;
+        }
+
+        private static void LoadSourceTypes()
+        {
+            var iSource = typeof(ISource);
+            _sourceTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(iSource.IsAssignableFrom)
+                .Where(t => !t.IsInterface)
+                .ToList();
         }
     }
 }
