@@ -27,6 +27,7 @@
                 <div ng-repeat="source in sources">
                     <input type="checkbox" id="site{{source.Id}}" data-sourceId="{{source.Id}}" checked="checked" />
                     <label for="site{{source.Id}}">{{source.Name}}</label>
+                    <div class="snippet" ng-bind-html="source.Snippet"></div>
                 </div>
             </div>
         </div>

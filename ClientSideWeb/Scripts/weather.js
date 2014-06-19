@@ -1,20 +1,21 @@
 ﻿weatherAggregator.weatherPage = {
     initWeatherApp: function() {
 
-            var weatherApp = angular.module('weatherApp', []);
+        var weatherApp = angular.module('weatherApp', []).config(function ($sceProvider) {
+            $sceProvider.enabled(false); //Yes, I've disabled it. And I'm happy with it.
+        });
 
-            weatherApp.controller('WeatherController', function($scope) {
-                weatherAggregator.proxy.getSources(function(response) {
-                    $scope.$apply(function() {
-                        $scope.sources = response;
+        weatherApp.controller('WeatherController', function($scope) {
+            weatherAggregator.proxy.getSources(function(response) {
+                $scope.$apply(function() {
+                    $scope.sources = response;
                 });
-
-                });
-
-                $scope.weatherModels = [{ index: 0 }, { index: 1}, { index: 2 }, { index: 3 }];
-
-                $scope.getWeather = weatherAggregator.weatherPage.getWeather;
             });
+
+            $scope.weatherModels = [{ index: 0 }, { index: 1}, { index: 2 }, { index: 3 }];
+
+            $scope.getWeather = weatherAggregator.weatherPage.getWeather;
+        });
     },
 
     init: function (){

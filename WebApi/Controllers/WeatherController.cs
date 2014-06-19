@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
+using System.Web.Compilation;
 using System.Web.Http;
 using WeatherAggregator.Core;
 using WeatherAggregator.Core.Entities;
+using WeatherAggregator.Core.Interfaces;
 using WeatherAggregator.WebApi.Models;
 
 namespace WeatherAggregator.WebApi.Controllers
@@ -31,9 +34,22 @@ namespace WeatherAggregator.WebApi.Controllers
             var settings = new Settings
             {
                 CacheRepositoryFactory = () => DataAccess.InMemory.CacheRepository.Instance,
-                WeatherCacheTimeoutSeconds = int.Parse(ConfigurationManager.AppSettings["WeatherCacheTimeoutSeconds"])
+                WeatherCacheTimeoutSeconds = int.Parse(ConfigurationManager.AppSettings["WeatherCacheTimeoutSeconds"]),
+                Sources = LoadSources()
             };
             return new CoreFacade(settings);
+        }
+
+        private static List<ISource> LoadSources()
+        {
+            var iSource = typeof(ISource);
+            var sources = BuildManager.GetReferencedAssemblies().Cast<Assembly>()
+                .SelectMany(s => s.GetTypes())
+                .Where(iSource.IsAssignableFrom)
+                .Where(t => !t.IsInterface)
+                .Select(t => (ISource) Activator.CreateInstance(t))
+                .ToList();
+            return sources;
         }
     }
 }

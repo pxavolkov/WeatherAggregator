@@ -7,13 +7,15 @@ namespace WeatherAggregator.WebApi.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string Snippet { get; set; }
 
         public static SourceModel Map(ISource source)
         {
             return new SourceModel
             {
                 Id = source.Id,
-                Name = source.Name
+                Name = source.Name,
+                Snippet = source.Snippet
             };
         }
     }
