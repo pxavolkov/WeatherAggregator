@@ -40,7 +40,7 @@
                     <div class="tabs-content">
                         <div class="content {{weather.active}}" id="contenttabDay{{weather.index}}" ng-repeat="weather in weatherModels">
                             <p>Температура: {{weather.Temperature}}</p> 
-                            <p>Облачность: <img class="cloudness" src="Images/{{weather.CloudIcon}}" /></p> 
+                            <p>Облачность: <img class="cloudness" src="Images/{{weather.cloudInfo.icon}}" title="{{weather.cloudInfo.title}}" /></p> 
                             <p>Осадки: {{weather.Precipitation}}</p> 
                         </div>
                     </div>

@@ -3,6 +3,7 @@
     daysOfWeek: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
     precipitation: ['Без осадков', 'Дождь', 'Снег', 'Град'],
     cloudIcons: ['Sun.png', 'SunCloud.png', 'Cloud.png'],
+    cloudTitles: ['Солнечно', 'Переменная облачность', 'Пасмурно'],
 
     getDay: function (index) {
         if (index < 2) {
@@ -23,8 +24,11 @@
         $("#waiterDiv").hide();
     },
 
-    getCloudIconUrl: function (cloudness) {
+    getCloudInfo: function (cloudness) {
         var index = Math.trunc(this.cloudIcons.length * cloudness / 100);
-        return this.cloudIcons[index];
+        return {
+            icon: this.cloudIcons[index],
+            title: this.cloudTitles[index]
+        };
     }
 };

@@ -11,5 +11,10 @@ namespace WeatherAggregator.Core.Entities
         {
             return date >= From && date <= To;
         }
+
+        public DateRange Normalize()
+        {
+            return new DateRange { From = From.Date, To = To.Date };
+        }
     }
 }

@@ -59,7 +59,7 @@
                 element.index = index;
                 element.active = index == 0 ? "active" : "";
                 element.Precipitation = weatherAggregator.utils.getPrecipitation(element.Precipitation);
-                element.CloudIcon = weatherAggregator.utils.getCloudIconUrl(element.Cloudness);
+                element.cloudInfo = weatherAggregator.utils.getCloudInfo(element.Cloudness);
                 element.day = weatherAggregator.utils.getDay(index);
             });
             var $scope = angular.element($("body")).scope();
