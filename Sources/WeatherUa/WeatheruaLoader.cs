@@ -1,35 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using Newtonsoft.Json;
 using Sources;
+using WeatherAggregator.Sources.Aspects;
 
 namespace WeatherAggregator.Sources.WeatherUa
 {
     public static class WeatheruaLoader
     {
-
-        public static List<WeatheruaCity> GetCities()
-        {
-            List<WeatheruaCity> cities = null;
-            if (File.Exists(ConfigurationManager.AppSettings["WeatherUaCitiesPath"]))
-            {
-                using (var reader = new StreamReader(ConfigurationManager.AppSettings["WeatherUaCitiesPath"]))
-                {
-                    cities = JsonConvert.DeserializeObject<List<WeatheruaCity>>(reader.ReadToEnd());
-                }
-            }
-            if (cities == null)
-            {
-                cities = LoadCities();
-                SaveCities(cities);
-            }
-
-            return cities;
-        }
-
+        [CityCache]
         public static List<WeatheruaCity> LoadCities()
         {
             List<WeatheruaCity> weatheruaCities = new List<WeatheruaCity>();
@@ -44,16 +23,6 @@ namespace WeatherAggregator.Sources.WeatherUa
             }
 
             return weatheruaCities;
-        }
-
-        private static void SaveCities(List<WeatheruaCity> weatheruaCities)
-        {
-            var json = JsonConvert.SerializeObject(weatheruaCities);
-
-            using (var writer = new StreamWriter(ConfigurationManager.AppSettings["WeatherUaCitiesPath"]))
-            {
-                writer.Write(json);
-            }
         }
 
         private static IEnumerable<WeatheruaCity> Convert(IEnumerable<XElement> cities)

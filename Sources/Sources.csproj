@@ -63,6 +63,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aspects\CityCacheAttribute.cs" />
+    <Compile Include="Aspects\WeatherCacheAttribute.cs" />
     <Compile Include="ForecastioSource.cs" />
     <Compile Include="WeatherUndergroundSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

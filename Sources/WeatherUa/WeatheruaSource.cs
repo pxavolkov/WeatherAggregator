@@ -82,7 +82,7 @@ namespace Sources
             if (string.IsNullOrEmpty(location.City))
                 return null;
 
-            var cities = WeatheruaLoader.GetCities();
+            var cities = WeatheruaLoader.LoadCities();
             if (cities == null) 
                 return null;
 

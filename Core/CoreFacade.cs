@@ -16,7 +16,6 @@ namespace WeatherAggregator.Core
         {
             _sources = settings.Sources;
             MethodCacheAttribute.CacheRepositoryFactory = settings.CacheRepositoryFactory;
-            MethodCacheAttribute.CacheTimeoutSeconds = settings.WeatherCacheTimeoutSeconds;
         }
 
         public List<Weather> GetWeather(List<Guid> sources, DateRange dateRange, Location location)

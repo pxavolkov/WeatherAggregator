@@ -8,6 +8,7 @@ using System.Web.Http;
 using WeatherAggregator.Core;
 using WeatherAggregator.Core.Entities;
 using WeatherAggregator.Core.Interfaces;
+using WeatherAggregator.Sources.Aspects;
 using WeatherAggregator.WebApi.Models;
 
 namespace WeatherAggregator.WebApi.Controllers
@@ -34,9 +35,11 @@ namespace WeatherAggregator.WebApi.Controllers
             var settings = new Settings
             {
                 CacheRepositoryFactory = () => DataAccess.InMemory.CacheRepository.Instance,
-                WeatherCacheTimeoutSeconds = int.Parse(ConfigurationManager.AppSettings["WeatherCacheTimeoutSeconds"]),
                 Sources = LoadSources()
             };
+
+            WeatherCacheAttribute.TimeoutInSeconds = int.Parse(ConfigurationManager.AppSettings["WeatherCacheTimeoutSeconds"]);
+
             return new CoreFacade(settings);
         }
 

@@ -12,13 +12,14 @@ namespace WeatherAggregator.Core.Aspects
     public class MethodCacheAttribute : MethodInterceptionAspect
     {
         internal static Func<ICacheRepository> CacheRepositoryFactory;
-        internal static int CacheTimeoutSeconds;
 
         private readonly Type _target;
+        private readonly int _timeout;
 
-        public MethodCacheAttribute(Type target = null)
+        public MethodCacheAttribute(int timeout, Type target = null)
         {
             _target = target;
+            _timeout = timeout;
         }
 
         public override void OnInvoke(MethodInterceptionArgs args)
@@ -27,7 +28,7 @@ namespace WeatherAggregator.Core.Aspects
             var key = BuildCacheKey(args.Method, args.Arguments);
             var cacheEntry = cache[key] as CacheEntry;
             object result;
-            if (cacheEntry == null || cacheEntry.IsExpired())
+            if (cacheEntry == null || (DateTime.Now - cacheEntry.DateCreated).TotalSeconds > _timeout)
             {
                 result = args.Invoke(args.Arguments);
                 cache[key] = new CacheEntry
@@ -69,11 +70,6 @@ namespace WeatherAggregator.Core.Aspects
         {
             public object Value;
             public DateTime DateCreated;
-
-            public bool IsExpired()
-            {
-                return (DateTime.Now - DateCreated).TotalSeconds > CacheTimeoutSeconds;
-            }
         }
     }
 }

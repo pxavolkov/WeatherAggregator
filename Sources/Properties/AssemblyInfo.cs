@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 using WeatherAggregator.Core.Aspects;
 using WeatherAggregator.Core.Interfaces;
+using WeatherAggregator.Sources.Aspects;
 
 [assembly: AssemblyTitle("Sources")]
 [assembly: AssemblyDescription("")]
@@ -38,4 +39,4 @@ using WeatherAggregator.Core.Interfaces;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: MethodLog(typeof(ISource))]
-[assembly: MethodCache(typeof(ISource))]
+[assembly: WeatherCache]
