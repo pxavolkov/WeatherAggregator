@@ -6,10 +6,11 @@
             $sceProvider.enabled(false); //Yes, I've disabled it. And I'm happy with it.
         });
 
-        weatherApp.controller('WeatherController', function($scope) {
+        weatherApp.controller('WeatherController', function($scope, $timeout) {
             weatherAggregator.proxy.getSources(function(response) {
                 $scope.$apply(function() {
                     $scope.sources = response;
+                    $timeout(weatherAggregator.weatherPage.restoreSourceChecks);
                 });
             });
 
@@ -17,6 +18,33 @@
 
             $scope.getWeather = weatherAggregator.weatherPage.getWeather;
         });
+        
+        $(window).on('beforeunload', function () {
+            weatherAggregator.weatherPage.saveSourceChecks();
+        });
+    },
+
+    restoreSourceChecks: function () {
+        var storedSources = localStorage.getItem('Sources');
+        if (storedSources != null) {
+            storedSources = JSON.parse(storedSources);
+            $.each(storedSources, function (j, s) {
+                $('#sourcesDiv').find('input[data-sourceid=' + s.Id + ']').prop('checked', s.IsChecked);
+            });
+        } else {
+            $('#sourcesDiv').find('input[type=checkbox]').prop('checked', true);
+        }
+    },
+
+    saveSourceChecks: function () {
+        var sources = [];
+        $('#sourcesDiv').find('input[type=checkbox]').each(function (i, e) {
+            sources.push({
+                Id: $(e).data('sourceid'),
+                IsChecked: $(e).is(':checked')
+            });
+        });
+        localStorage.setItem('Sources', JSON.stringify(sources));
     },
 
     init: function (){
