@@ -58,7 +58,6 @@
     },
 
     getWeather: function () {
-        weatherAggregator.utils.showWaiter();
         var selectedSources = $("#sourcesDiv input:checked").map(function () {
             return $(this).data("sourceid");
         }).get();
@@ -68,6 +67,7 @@
         } else if (weatherAggregator.weatherPage.requestData.Location.Latitude == null || weatherAggregator.weatherPage.requestData.Location.Longitude == null) {
             alert("Пожалуйста, выберите место на карте");
         } else {
+            weatherAggregator.utils.showWaiter();
             var data = {
                 Sources: selectedSources,
                 Location: {
@@ -81,7 +81,7 @@
             };
 
             data.DateRange.To.setDate(data.DateRange.To.getDate() + 2);
-            weatherAggregator.proxy.getWeather(data, weatherAggregator.weatherPage.bindWeather);
+            weatherAggregator.proxy.getWeather(data, weatherAggregator.weatherPage.bindWeather, weatherAggregator.weatherPage.onGetWeatherComplete);
         }
     },
 
@@ -98,6 +98,9 @@
             $scope.$apply(function () { $scope.weatherModels = data; });
             $("#tabsDiv").removeClass('hidden');
         }
+    },
+
+    onGetWeatherComplete: function() {
         weatherAggregator.utils.hideWaiter();
     }
 };
