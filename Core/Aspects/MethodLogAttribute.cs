@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using PostSharp.Aspects;
 
 namespace WeatherAggregator.Core.Aspects
 {
     [Serializable]
-    public class MethodLogAttribute : OnMethodBoundaryAspect
+    public class MethodLogAttribute : BaseMethodInterceptor
     {
-        private readonly Type _target;
-
         public MethodLogAttribute(Type target = null)
-        {
-            _target = target;
-        }
+            : base(target) { }
 
         public override void OnEntry(MethodExecutionArgs args)
         {
@@ -33,19 +28,6 @@ namespace WeatherAggregator.Core.Aspects
         public override void OnException(MethodExecutionArgs args)
         {
             Logger.Error(args.Exception);
-        }
-
-        public override bool CompileTimeValidate(MethodBase method)
-        {
-            var result = !method.IsSpecialName; //Skip constructor, properties
-
-            if (result && _target != null)
-            {
-                result = _target.IsAssignableFrom(method.DeclaringType);
-                result &= _target.GetMethods().Select(m => m.Name).Contains(method.Name);
-            }
-
-            return result;
         }
     }
 }

@@ -9,51 +9,38 @@ namespace WeatherAggregator.Core.Aspects
 {
     [Serializable]
     [MulticastAttributeUsage(MulticastTargets.Method, AllowMultiple = false)]
-    public class MethodCacheAttribute : MethodInterceptionAspect
+    public abstract class MethodCacheAttribute : BaseMethodInterceptor
     {
         internal static Func<ICacheRepository> CacheRepositoryFactory;
 
-        private readonly Type _target;
-        private readonly int _timeout;
+        protected abstract int Timeout { get; }
 
-        public MethodCacheAttribute(int timeout, Type target = null)
-        {
-            _target = target;
-            _timeout = timeout;
-        }
+        protected MethodCacheAttribute(Type target = null)
+            : base(target) { }
 
-        public override void OnInvoke(MethodInterceptionArgs args)
+        public override void OnEntry(MethodExecutionArgs args)
         {
             var cache = CacheRepositoryFactory();
             var key = BuildCacheKey(args.Method, args.Arguments);
             var cacheEntry = cache[key] as CacheEntry;
             object result;
-            if (cacheEntry == null || (DateTime.Now - cacheEntry.DateCreated).TotalSeconds > _timeout)
+            if (cacheEntry == null || (DateTime.Now - cacheEntry.DateCreated).TotalSeconds > Timeout)
             {
-                result = args.Invoke(args.Arguments);
+                Logger.Info("Key missed in cache: {0}", key);
+                base.OnEntry(args);
+                result = args.ReturnValue;
                 cache[key] = new CacheEntry
                 {
-                    Value = result,
+                    Value = args.ReturnValue,
                     DateCreated = DateTime.Now
                 };
             }
             else
             {
+                Logger.Info("Key found in cache: {0}", key);
                 result = cacheEntry.Value;
             }
             args.ReturnValue = result;
-        }
-
-        public override bool CompileTimeValidate(MethodBase method)
-        {
-            bool result = !method.IsSpecialName;
-
-            if (result && _target != null)
-            {
-                result = _target.IsAssignableFrom(method.DeclaringType);
-            }
-
-            return result;
         }
 
         private string BuildCacheKey(MethodBase method, Arguments arguments)

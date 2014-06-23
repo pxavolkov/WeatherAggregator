@@ -1,6 +1,5 @@
 ﻿using System;
 using WeatherAggregator.Core.Aspects;
-using WeatherAggregator.Core.Interfaces;
 
 namespace WeatherAggregator.Sources.Aspects
 {
@@ -8,6 +7,11 @@ namespace WeatherAggregator.Sources.Aspects
     public class CityCacheAttribute : MethodCacheAttribute
     {
         public CityCacheAttribute()
-            : base(int.MaxValue, typeof(ISource)) { }
+            : base(null) { }
+
+        protected override int Timeout
+        {
+            get { return int.MaxValue; }
+        }
     }
 }

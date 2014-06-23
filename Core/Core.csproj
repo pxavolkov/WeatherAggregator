@@ -40,6 +40,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Aspects\BaseMethodInterceptor.cs" />
     <Compile Include="Aspects\DateOnlyAttribute.cs" />
     <Compile Include="Aspects\MethodCacheAttribute.cs" />
     <Compile Include="Aspects\MethodLogAttribute.cs" />

@@ -38,8 +38,6 @@ namespace WeatherAggregator.WebApi.Controllers
                 Sources = LoadSources()
             };
 
-            WeatherCacheAttribute.TimeoutInSeconds = int.Parse(ConfigurationManager.AppSettings["WeatherCacheTimeoutSeconds"]);
-
             return new CoreFacade(settings);
         }
 
