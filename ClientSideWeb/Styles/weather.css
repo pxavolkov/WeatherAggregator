@@ -24,3 +24,7 @@ img.cloudness {
 label { /*Foundation's margin is too big.*/
     margin-right: 0 !important;
 }
+
+.gmnoprint img {
+    max-width: none
+}
