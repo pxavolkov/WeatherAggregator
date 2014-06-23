@@ -1,52 +1,78 @@
-﻿map = {};
-var geocoder;
+﻿var geocoder;
 var map;
 var marker;
+var infowindow;
 
 function initialize() {
     geocoder = new google.maps.Geocoder();
 
-    var latlng = new google.maps.LatLng(40.730885, -73.997383); // just hardcoded location for situation when user turn off geolocation in his browser. Can be changed to any other location
+    var latlng = new google.maps.LatLng(55.7500, 37.6167); // just hardcoded location for situation when user turn off geolocation in his browser. Can be changed to any other location
 
     var mapOptions = {
         zoom: 8,
         center: latlng,
-        mapTypeId: 'roadmap'
+        disableDefaultUI: true,
+        zoomControl: true,
+        zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.LARGE
+        }
     };
 
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    marker = new google.maps.Marker({
+        map: map
+    });
+    infowindow = new google.maps.InfoWindow();
+
 
     //If geolocation is turned off move map center to users location
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var pos = new google.maps.LatLng(position.coords.latitude,
+        navigator.geolocation.getCurrentPosition(function(position) {
+            latlng = new google.maps.LatLng(position.coords.latitude,
                 position.coords.longitude);
-            map.setCenter(pos);
+            setMarkerWithInfoWindow(latlng, true);
+
         });
+    } else {
+        setMarkerWithInfoWindow(latlng, true);
     }
 
+    
     //Add mouse click event
     google.maps.event.addListener(map, 'click', function (e) {
-        codeLatLng(e.latLng, map);
+        setMarkerWithInfoWindow(e.latLng, false);
     });
 }
 
-function codeLatLng(latlng, map) {
+function setMarkerWithInfoWindow(latlng, centerize) {
+    infowindow.close();// we close info window because calculation data for new window can takes time, so it is better to hide it.
+    marker.setPosition(latlng);
+    storingCoordinates(latlng);
+    showInfoWindow(latlng, infowindow);
+    
+    if (centerize) {
+        map.setCenter(latlng);
+    }
+}
+
+function storingCoordinates(latlng) {
+    weatherAggregator.weatherPage.requestData.Location.Latitude = latlng.lat();
+    weatherAggregator.weatherPage.requestData.Location.Longitude = latlng.lng();
+}
+
+
+function showInfoWindow(latlng, infowindow) {
     geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+        var message = "";
         if (status == google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-                marker = new google.maps.Marker({
-                    position: latlng,
-                    map: map
-                });
-                weatherAggregator.weatherPage.requestData.Location.Latitude = latlng.lat();
-                weatherAggregator.weatherPage.requestData.Location.Longitude = latlng.lng();
-            } else {
-                alert('No results found');
+            if (results[0]) {
+                message = results[0].formatted_address;
             }
-        } else {
-            alert('Geocoder failed due to: ' + status);
-        }
+            else { message = "Неизвестное место"; }
+        } else { message = "Неизвестное место"; };
+        infowindow.setPosition(latlng);
+        infowindow.setContent(message);
+        infowindow.open(map, marker);
     });
 }
 
