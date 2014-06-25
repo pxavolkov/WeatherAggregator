@@ -11,7 +11,8 @@ function initialize() {
     var mapOptions = {
         zoom: 8,
         center: latlng,
-        disableDefaultUI: true,
+        panControl: false,
+        scaleControl: false,
         zoomControl: true,
         zoomControlOptions: {
             style: google.maps.ZoomControlStyle.LARGE
@@ -19,25 +20,30 @@ function initialize() {
     };
 
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    var weatherLayer = new google.maps.weather.WeatherLayer({
+        temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS
+    });
+    weatherLayer.setMap(map);
+
+    var cloudLayer = new google.maps.weather.CloudLayer();
+    cloudLayer.setMap(map);
     marker = new google.maps.Marker({
         map: map
     });
     infowindow = new google.maps.InfoWindow();
 
-
+    setMarkerWithInfoWindow(latlng, true);
     //If geolocation is turned off move map center to users location
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
             latlng = new google.maps.LatLng(position.coords.latitude,
                 position.coords.longitude);
             setMarkerWithInfoWindow(latlng, true);
 
         });
-    } else {
-        setMarkerWithInfoWindow(latlng, true);
     }
 
-    
+
     //Add mouse click event
     google.maps.event.addListener(map, 'click', function (e) {
         setMarkerWithInfoWindow(e.latLng, false);
@@ -49,7 +55,7 @@ function setMarkerWithInfoWindow(latlng, centerize) {
     marker.setPosition(latlng);
     storingCoordinates(latlng);
     showInfoWindow(latlng, infowindow);
-    
+
     if (centerize) {
         map.setCenter(latlng);
     }
