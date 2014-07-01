@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Compilation;
 using System.Web.Http;
+using System.Web.Http.Results;
+using System.Web.UI.WebControls;
 using WeatherAggregator.Core;
 using WeatherAggregator.Core.Entities;
 using WeatherAggregator.Core.Interfaces;

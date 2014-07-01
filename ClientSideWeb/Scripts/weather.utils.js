@@ -17,11 +17,11 @@
         return this.precipitation[index];
     },
 
-    showWaiter: function() {
-        $("#waiterDiv").show();
+    showWaiter: function () {
+        window.waiter.show({ targetId: 'body' });
     },
     hideWaiter: function () {
-        $("#waiterDiv").hide();
+        window.waiter.hide({ targetId: 'body' });
     },
 
     getCloudInfo: function (cloudness) {
