@@ -4,33 +4,55 @@ defaultPlace = [55.76, 37.64]; // по умолчанию москва
 
 function init() {
     var myPlacemark,
-    myMap = new ymaps.Map('map-canvas', {
-        center: defaultPlace,
-        zoom: 9,
-        controls: ['smallMapDefaultSet']
-    });
+        myMap = new ymaps.Map('map-canvas', {
+            center: defaultPlace,
+            zoom: 9,
+            controls: ['smallMapDefaultSet']
+        });
 
     // Слушаем клик на карте
-    myMap.events.add('click', function (e) {
+    myMap.events.add('click', function(e) {
         var coords = e.get('coords');
         setPlacemark(coords, false);
 
     });
 
     setPlacemark(defaultPlace, true);
+    setPlaceMartByGeolocation();
+
+
+    function setPlaceMartByGeolocation() {
+        ymaps.geolocation.get({
+                provider: 'yandex',
+                mapStateAutoApply: true
+            })
+            .then(function(result) {
+                var coords = result.geoObjects.position;
+                setPlacemark(coords, true);
+            });
+
+        ymaps.geolocation.get({
+                provider: 'browser',
+                mapStateAutoApply: true
+            })
+            .then(function(result) {
+                var coords = result.geoObjects.position;
+                setPlacemark(coords, true);
+            });
+    }
 
     function setPlacemark(coords, centerize) {
         // Если метка уже создана – просто передвигаем ее
         if (myPlacemark) {
             myPlacemark.geometry.setCoordinates(coords);
         }
-            // Если нет – создаем.
+        // Если нет – создаем.
         else {
             myPlacemark = createPlacemark(coords);
             myMap.geoObjects.add(myPlacemark);
 
             // Слушаем событие окончания перетаскивания на метке.
-            myPlacemark.events.add('dragend', function () {
+            myPlacemark.events.add('dragend', function() {
                 getAddress(myPlacemark.geometry.getCoordinates());
             });
         }
@@ -65,7 +87,7 @@ function init() {
     function getAddress(coords) {
         myPlacemark.properties.set('iconContent', 'поиск...');
         myPlacemark.properties.set('balloonContent', 'поиск...');
-        ymaps.geocode(coords).then(function (res) {
+        ymaps.geocode(coords).then(function(res) {
             var firstGeoObject = res.geoObjects.get(0);
             myPlacemark.properties.set({
                 iconContent: firstGeoObject.properties.get('name'),
