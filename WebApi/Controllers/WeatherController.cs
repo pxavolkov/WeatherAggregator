@@ -33,6 +33,7 @@ namespace WeatherAggregator.WebApi.Controllers
             return result;
         }
 
+
         [HttpPost]
         public bool SubscribeEmailForNotify(string email, double latitude, double longitude, string address)
         {
@@ -69,11 +70,17 @@ namespace WeatherAggregator.WebApi.Controllers
         [HttpGet]
         public void NotifySubscribers()
         {
+            //Delete all emails which are not confirmed for month for example
+            DeleteAllexpiredNotConfirmedEmails();
             //Get list of confirmed emails
+            List<object> confirmedEmailsToNotify = GetEmailsForNotifiyng();
             // Check if lastForecast date is more than some value (1 day for example) and if is launch forecast for those emails coordinates and send letter if rain is comming
+            foreach (var notifyInfo in confirmedEmailsToNotify)
+            {
+
+            }
             //after that update lastForecastDate for those emails
         }
-
 
         #region Private Methods
 

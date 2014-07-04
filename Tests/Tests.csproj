@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="ForecastioTests.cs" />
     <Compile Include="GismeteoTests.cs" />
+    <Compile Include="MongoTests.cs" />
     <Compile Include="OpenWeatherMapSourceTest.cs" />
     <Compile Include="WeatheruaTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -62,6 +63,10 @@
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{9E14FF30-E237-40CE-A993-4DCCC8AF9CAA}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{897c1301-9195-460c-ada2-6935b4617f6c}</Project>
+      <Name>DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sources\Sources.csproj">
       <Project>{2A16AE16-6048-4875-9F44-D885D8504B3B}</Project>
