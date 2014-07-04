@@ -7,16 +7,19 @@ namespace WeatherAggregator.DataAccess.Mongo
 {
     class MongoContext
     {
-        public MongoCollection<Feedback> Feddback { get; private set; }
-
-        public MongoContext()
+        static MongoContext()
         {
             BsonClassMap.RegisterClassMap<Feedback>(cm =>
             {
                 cm.AutoMap();
                 cm.SetIdMember(cm.GetMemberMap(f => f.DateCreated));
             });
+        }
 
+        public MongoCollection<Feedback> Feddback { get; private set; }
+
+        public MongoContext()
+        {
             var connectionString = "mongodb://localhost";
             var client = new MongoClient(connectionString);
             var server = client.GetServer();

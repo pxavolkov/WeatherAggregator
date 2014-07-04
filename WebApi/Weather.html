@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="ThirdParty/Foundation/css/foundation.css" type="text/css"/>
     <link rel="stylesheet" href="Styles/weather.css" type="text/css"/>
     <script src="ThirdParty/angular.js"></script>
-    <script src="ThirdParty/jquery-1.11.1.min.js"></script>
+
+    <script src="ThirdParty/Foundation/js/vendor/jquery.js"></script>
+    <script src="ThirdParty/Foundation/js/vendor/fastclick.js"></script>
     <script src="ThirdParty/Foundation/js/foundation.min.js"></script>
-    <script src="ThirdParty/Foundation/js/foundation/foundation.tab.js"></script>
+
     <script src="ThirdParty/waiter-min.js"> </script>
     <script src="Scripts/weather.proxy.js"></script>
     <script src="Scripts/weather.utils.js"></script>
@@ -59,7 +61,28 @@
                 </div>
             </div>
         </div>
-        <p>Судя по точности прогнозов, в ГидроМетЦентре, "мет" может означать "метамфетамин"</p>
+        <p>Судя по точности прогнозов, в ГидроМетЦентре, "мет" может означать "метамфетамин" :)
+            <a href="Javascript:void(0)" data-reveal-id="feedbackModal">Я хочу быть услышан(а)!</a>
+        </p>
+    </div>
+    <div id="feedbackModal" class="reveal-modal tiny" data-reveal>
+        <form>
+            <div>
+                <input ng-model="feedback.email" type="text" placeholder="E-mail (если хотите получить ответ)" />
+            </div>
+            <div>
+                <input ng-model="feedback.name" type="text" placeholder="Имя (не обязательно)" />
+            </div>
+            <div>
+                <textarea ng-model="feedback.text" placeholder="Что у вас на уме"></textarea>
+            </div>
+            <div>
+                <a href="Javascript:void(0)" class="close-reveal-modal right static" ng-click="feedback.send()">
+                    <span class="button">Отправить</span>
+                </a>
+            </div>
+        </form>
+        <a class="close-reveal-modal">&#215;</a>
     </div>
 </body>
 </html>

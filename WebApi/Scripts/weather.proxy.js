@@ -27,6 +27,10 @@ weatherAggregator.proxy = function () {
 
         getWeather: function (data, onSuccess, onComplete) {
             sendAjaxRequest("POST", "/api/Weather/GetWeather", data, onSuccess, onComplete);
+        },
+
+        sendFeedback: function(data) {
+            sendAjaxRequest("POST", "/api/Feedback/Add", data);
         }
     };
 }();
