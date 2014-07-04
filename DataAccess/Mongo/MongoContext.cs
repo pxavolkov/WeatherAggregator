@@ -5,7 +5,7 @@ using WeatherAggregator.Core.Entities;
 
 namespace WeatherAggregator.DataAccess.Mongo
 {
-    class MongoContext
+    public class MongoContext
     {
         static MongoContext()
         {
@@ -18,12 +18,13 @@ namespace WeatherAggregator.DataAccess.Mongo
 
         public MongoCollection<Feedback> Feddback { get; private set; }
 
-        public MongoContext()
+        public MongoContext(string connectionString)
         {
-            var connectionString = "mongodb://localhost";
-            var client = new MongoClient(connectionString);
+            var url = new MongoUrl(connectionString);
+            var client = new MongoClient(url);
             var server = client.GetServer();
-            var database = server.GetDatabase("WeatherAggregator");
+            var database = server.GetDatabase(url.DatabaseName);
+
             Feddback = database.GetCollection<Feedback>("Feedback");
         }
     }
