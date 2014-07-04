@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Web.Compilation;
@@ -32,6 +33,50 @@ namespace WeatherAggregator.WebApi.Controllers
             return result;
         }
 
+        [HttpPost]
+        public bool SubscribeEmailForNotify(string email, double latitude, double longitude, string address)
+        {
+            bool result = true;
+            try
+            {
+                //Add or update Email with coordinates and text addres to DB with status "Not Confirmed"
+                bool isUpdated = IsPresentNotConfirmedEmail(email);
+                string key = AddOrUpdateNotConfirmedEmail(email, latitude, longitude, address);
+
+                //Send email with link for confirming  subscription. (If entered email is present in DB with status "Confirmed" text in email should be about changing address)
+                SendConfirmationEmail(email, key, address, isUpdated);
+            }
+            catch (Exception e)
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        [HttpGet]
+        public void ConfirmSubscriptionOrChanging(string email, string key)
+        {
+            // copy data from not confirmed data to confirmed and delete not confirmed. ofcourse key should be checked before operation
+        }
+
+
+        [HttpGet]
+        public void UnsubscribeEmail(string email, string key)
+        {
+            // check key and delete record from BD if key is correct
+        }
+
+        [HttpGet]
+        public void NotifySubscribers()
+        {
+            //Get list of confirmed emails
+            // Check if lastForecast date is more than some value (1 day for example) and if is launch forecast for those emails coordinates and send letter if rain is comming
+            //after that update lastForecastDate for those emails
+        }
+
+
+        #region Private Methods
+
         private static CoreFacade CreateCoreFacade()
         {
             var settings = new Settings
@@ -54,5 +99,7 @@ namespace WeatherAggregator.WebApi.Controllers
                 .ToList();
             return sources;
         }
+
+        #endregion Private Methods
     }
 }
