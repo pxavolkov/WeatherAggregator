@@ -25,8 +25,6 @@ namespace WeatherAggregator.DataAccess.Mongo
             });
         }
 
-        public MongoCollection<Feedback> Feddback { get; private set; }
-
         public MongoContext(string connectionString)
         {
             var url = new MongoUrl(connectionString);

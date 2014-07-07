@@ -11,11 +11,16 @@ namespace WeatherAggregator.DataAccess.Mongo
 {
     public class SubscriptionRepository : ISubscriptionRepository
     {
-        private readonly MongoContext _mongo = new MongoContext();
-        
+        private readonly MongoContext _mongo;
+
+        public SubscriptionRepository(MongoContext context)
+        {
+            _mongo = context;
+        }
+
         public bool IsExist(string email)
         {
-            throw new NotImplementedException();
+            return _mongo.Subscription.AsQueryable().Any(s => s.Email == email && s.IsConfirmed);
         }
 
         public void Add(SubscriptionInfo subscription)
@@ -29,11 +34,14 @@ namespace WeatherAggregator.DataAccess.Mongo
 
         public string Confirm(string key)
         {
-            SubscriptionInfo notConfirmedSubscription = _mongo.Subscription.AsQueryable().FirstOrDefault(s=>s.Key == key && s.IsConfirmed == false);
+            SubscriptionInfo notConfirmedSubscription =
+                _mongo.Subscription.AsQueryable().FirstOrDefault(s => s.Key == key && s.IsConfirmed == false);
             if (notConfirmedSubscription == null)
-                throw new Exception(string.Format("can' find subscription with key {0}",key));
+                throw new Exception(string.Format("can' find subscription with key {0}", key));
 
-            SubscriptionInfo existConfirmedSubscription = _mongo.Subscription.AsQueryable().FirstOrDefault(s => s.Email == notConfirmedSubscription.Email && s.IsConfirmed);
+            SubscriptionInfo existConfirmedSubscription =
+                _mongo.Subscription.AsQueryable()
+                    .FirstOrDefault(s => s.Email == notConfirmedSubscription.Email && s.IsConfirmed);
 
             if (existConfirmedSubscription != null)
             {
@@ -50,7 +58,7 @@ namespace WeatherAggregator.DataAccess.Mongo
         public string Unsobscribe(string key)
         {
             SubscriptionInfo subscription = _mongo.Subscription.AsQueryable().FirstOrDefault(s => s.Key == key);
-            if (subscription ==null)
+            if (subscription == null)
                 throw new Exception(string.Format("can' find subscription with key {0}", key));
 
             //_mongo.Subscription.Remove(subscription);
@@ -59,14 +67,20 @@ namespace WeatherAggregator.DataAccess.Mongo
 
         public List<SubscriptionInfo> GetConfirmed()
         {
-            return _mongo.Subscription.AsQueryable().Where(s => s.IsConfirmed && (s.LastNotifyDate - DateTime.Now)> new TimeSpan(0,6,0)).ToList();
+            return
+                _mongo.Subscription.AsQueryable()
+                    .Where(s => s.IsConfirmed && (s.LastNotifyDate - DateTime.Now) > new TimeSpan(0, 6, 0))
+                    .ToList();
         }
 
         public void UpdateNotifyDate(SubscriptionInfo subscription)
         {
-            SubscriptionInfo updatingSubscription = _mongo.Subscription.AsQueryable().FirstOrDefault(s => s.CreatedDate == subscription.CreatedDate && s.IsConfirmed);
+            SubscriptionInfo updatingSubscription =
+                _mongo.Subscription.AsQueryable()
+                    .FirstOrDefault(s => s.CreatedDate == subscription.CreatedDate && s.IsConfirmed);
             if (updatingSubscription == null)
-                throw new Exception(string.Format("can' find subscription for {0} for updating date on notification", subscription.Email));
+                throw new Exception(string.Format("can' find subscription for {0} for updating date on notification",
+                    subscription.Email));
 
             updatingSubscription.LastNotifyDate = DateTime.Now;
             //_mongo.Subscription.Update(updatingSubscription);
