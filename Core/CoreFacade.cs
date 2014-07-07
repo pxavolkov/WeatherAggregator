@@ -11,11 +11,13 @@ namespace WeatherAggregator.Core
     public class CoreFacade
     {
         private readonly List<ISource> _sources;
+        private readonly Func<IFeedbackRepository> _feedbackRepositoryFactory;
 
         public CoreFacade(Settings settings)
         {
             _sources = settings.Sources;
             MethodCacheAttribute.CacheRepositoryFactory = settings.CacheRepositoryFactory;
+            _feedbackRepositoryFactory = settings.FeedbackRepositoryFactory;
         }
 
         public List<Weather> GetWeather(List<Guid> sources, DateRange dateRange, Location location)
@@ -27,6 +29,12 @@ namespace WeatherAggregator.Core
         public IEnumerable<ISource> GetSources()
         {
             return _sources;
+        }
+
+        public void AddFeedback(Feedback feedback)
+        {
+            var provider = new FeedbackProvider(_feedbackRepositoryFactory());
+            provider.Add(feedback);
         }
     }
 }

@@ -28,3 +28,11 @@ label { /*Foundation's margin is too big.*/
 .gmnoprint img {
     max-width: none
 }
+
+.static {
+    position: static !important;
+}
+
+#feedbackModal form {
+    margin-top: 15px;
+}

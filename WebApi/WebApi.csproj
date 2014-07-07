@@ -87,6 +87,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\WeatherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -105,6 +107,7 @@
     <Content Include="Scripts\weather.proxy.js" />
     <Content Include="Scripts\weather.utils.js" />
     <Content Include="Scripts\ymap.js" />
+    <Content Include="Styles\montanaflynn.css" />
     <Content Include="Styles\weather.css" />
     <Content Include="ThirdParty\angular.js" />
     <Content Include="ThirdParty\angular.min.js" />
