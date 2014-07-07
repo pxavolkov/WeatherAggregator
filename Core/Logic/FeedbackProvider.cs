@@ -1,4 +1,5 @@
-﻿using WeatherAggregator.Core.Entities;
+﻿using System;
+using WeatherAggregator.Core.Entities;
 using WeatherAggregator.Core.Interfaces;
 
 namespace WeatherAggregator.Core.Logic
@@ -14,6 +15,7 @@ namespace WeatherAggregator.Core.Logic
 
         public void Add(Feedback feedback)
         {
+            feedback.DateCreated = DateTime.UtcNow;
             _feedback.Add(feedback);
         }
     }

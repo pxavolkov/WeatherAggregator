@@ -1,7 +1,6 @@
 ﻿weatherAggregator.weatherPage = {
     requestData: {Location: {} },
     initWeatherApp: function() {
-
         var weatherApp = angular.module('weatherApp', []).config(function ($sceProvider) {
             $sceProvider.enabled(false); //Yes, I've disabled it. And I'm happy with it.
         });
@@ -17,11 +16,25 @@
             $scope.weatherModels = [{ index: 0 }, { index: 1}, { index: 2 }, { index: 3 }];
 
             $scope.getWeather = weatherAggregator.weatherPage.getWeather;
+            $scope.feedback = weatherAggregator.weatherPage.feedback;
         });
         
         $(window).on('beforeunload', function () {
             weatherAggregator.weatherPage.saveSourceChecks();
         });
+    },
+
+    feedback: {
+        email: null,
+        name: null,
+        text: null,
+        send: function () {
+            weatherAggregator.proxy.sendFeedback({
+                Email: this.email,
+                Name: this.name,
+                Text: this.text
+            });
+        }
     },
 
     restoreSourceChecks: function () {
@@ -48,6 +61,7 @@
     },
 
     init: function () {
+        $(document).foundation();
         weatherAggregator.utils.showWaiter();
         $("#tabsDiv").on('click', "a[id^='tabDay']", function () {
             $("[id^='contenttabDay']").removeClass('active');

@@ -8,7 +8,12 @@ namespace WeatherAggregator.DataAccess.Mongo
 {
     public class FeedbackRepository : IFeedbackRepository
     {
-        private readonly MongoContext _mongo = new MongoContext();
+        private readonly MongoContext _mongo;
+
+        public FeedbackRepository(MongoContext context)
+        {
+            _mongo = context;
+        }
 
         public void Add(Feedback feedback)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Web.Compilation;
@@ -29,7 +30,9 @@ namespace WeatherAggregator.WebApi.Controllers
 
         private static IFeedbackRepository CreateFeedbackRepository()
         {
-            return new FeedbackRepository();
+            var connectionString = ConfigurationManager.AppSettings["MONGOLAB_URI"];
+            var context = new MongoContext(connectionString);
+            return new FeedbackRepository(context);
         }
 
         private static List<ISource> LoadSources()

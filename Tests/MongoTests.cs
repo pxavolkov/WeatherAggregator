@@ -12,7 +12,7 @@ namespace Tests
         [Test]
         public void FeedbackTest()
         {
-            var repository = new FeedbackRepository();
+            var repository = new FeedbackRepository(new MongoContext("mongodb://localhost/WeatherAggregator"));
             var listBefore = repository.GetAll();
             repository.Add(new Feedback { DateCreated = DateTime.Now, Email = "lol.com", Name = "lol", Text = "Text" });
             var listAfter = repository.GetAll();
