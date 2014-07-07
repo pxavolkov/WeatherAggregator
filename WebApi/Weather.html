@@ -54,9 +54,29 @@
                             <p>Температура: {{weather.Temperature}}</p> 
                             <p>Облачность: <img class="cloudness" ng-src="Images/{{weather.cloudInfo.icon}}" title="{{weather.cloudInfo.title}} - {{weather.cloudInfo.percentage}}%" /></p> 
                             <p>Осадки: {{weather.Precipitation}}</p> 
+                        
+                            <a id="lnkDetails" style="font-size: smaller" ng-click="toggleDetails()">{{detailsText()}}</a>
+                            <div id="details" ng-show="detailsVisible">
+                                <table>
+                                    <tr>
+                                        <th>Источник</th>
+                                        <th>Температура</th>
+                                        <th>Облачность</th>
+                                        <th>Осадки</th>
+                                    </tr>
+                                    <tr ng-repeat="sw in weather.sourcedWeatherModels">
+                                        <td>{{sw.SourceName}}</td>
+                                        <td>{{sw.Temperature}}</td>
+                                        <td><img class="cloudness" ng-src="Images/{{sw.cloudInfo.icon}}" title="{{sw.cloudInfo.title}} - {{sw.cloudInfo.percentage}}%" /></td>
+                                        <td>{{sw.Precipitation}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
         <p>Судя по точности прогнозов, в ГидроМетЦентре, "мет" может означать "метамфетамин"</p>
