@@ -52,8 +52,9 @@
                         <li class="tab-title {{weather.active}}" ng-repeat="weather in weatherModels"><a href="#panel2-{{weather.index}}" id="tabDay{{weather.index}}">{{weather.day}}</a></li>
                     </ul>
                     <div class="tabs-content">
+                        <br/>
                         <div class="content {{weather.active}}" id="contenttabDay{{weather.index}}" ng-repeat="weather in weatherModels">
-                            <p>Температура: {{weather.Temperature}}</p> 
+                            <p>Температура: {{weather.Temperature}} &deg;C</p> 
                             <p>Облачность: <img class="cloudness" ng-src="Images/{{weather.cloudInfo.icon}}" title="{{weather.cloudInfo.title}} - {{weather.cloudInfo.percentage}}%" /></p> 
                             <p>Осадки: {{weather.Precipitation}}</p> 
                         </div>
