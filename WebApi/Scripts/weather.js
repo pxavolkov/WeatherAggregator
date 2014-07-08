@@ -1,8 +1,26 @@
 ﻿weatherAggregator.weatherPage = {
-    requestData: {Location: {} },
+    requestData: { Location: {} },
     initWeatherApp: function() {
-        var weatherApp = angular.module('weatherApp', []).config(function ($sceProvider) {
+        var weatherApp = angular.module('weatherApp', []).config(function($sceProvider) {
             $sceProvider.enabled(false); //Yes, I've disabled it. And I'm happy with it.
+        });
+
+        //1 день, 2 дня, 3 дня, 4 дня, 5 дней, ..., 10 дней, 11 дней, ..., 20 дней, 21 день, 22 дня, 23 дня, 24 дня, 25 дней...
+        weatherApp.filter('days', function () {
+            return function (input) {
+                var result = 'дней';
+
+                if (input < 10 || input > 20) {
+                    var modulus = input % 10;
+                    if (modulus == 1) {
+                        result = 'день';
+                    } else if (modulus >= 2 && modulus <= 4) {
+                        result = 'дня';
+                    }
+                }
+
+                return input + ' ' + result;
+            };
         });
 
         weatherApp.controller('WeatherController', function($scope, $timeout) {
@@ -13,7 +31,7 @@
                 });
             }, weatherAggregator.weatherPage.onGetWeatherComplete);
 
-            $scope.weatherModels = [{ index: 0 }, { index: 1}, { index: 2 }, { index: 3 }];
+            $scope.weatherModels = [{ index: 0 }, { index: 1 }, { index: 2 }, { index: 3 }];
             $scope.detailsVisible = false;
             $scope.detailsText = function() {
                 return $scope.detailsVisible ? "Скрыть" : "Подробнее";
@@ -22,9 +40,10 @@
             $scope.getWeather = weatherAggregator.weatherPage.getWeather;
             $scope.toggleDetails = weatherAggregator.weatherPage.toggleDetails;
             $scope.feedback = weatherAggregator.weatherPage.feedback;
+            $scope.subscription = weatherAggregator.weatherPage.subscription;
         });
         
-        $(window).on('beforeunload', function () {
+        $(window).on('beforeunload', function() {
             weatherAggregator.weatherPage.saveSourceChecks();
         });
     },
@@ -33,11 +52,23 @@
         email: null,
         name: null,
         text: null,
-        send: function () {
+        send: function() {
             weatherAggregator.proxy.sendFeedback({
                 Email: this.email,
                 Name: this.name,
                 Text: this.text
+            });
+        }
+    },
+
+    subscription: {
+        email: null,
+        subscribe: function () {
+            weatherAggregator.proxy.subscribe({
+                Email: this.email,
+                Latitude: weatherAggregator.weatherPage.requestData.Location.Latitude,
+                Longitude: weatherAggregator.weatherPage.requestData.Location.Longitude,
+                AddressText: weatherAggregator.weatherPage.requestData.Location.AddressText,
             });
         }
     },
@@ -97,7 +128,11 @@
                 Sources: selectedSources,
                 Location: {
                     Latitude: weatherAggregator.weatherPage.requestData.Location.Latitude,
-                    Longitude: weatherAggregator.weatherPage.requestData.Location.Longitude
+                    Longitude: weatherAggregator.weatherPage.requestData.Location.Longitude,
+                    AddressText: weatherAggregator.weatherPage.requestData.Location.AddressText,
+                    Country: weatherAggregator.weatherPage.requestData.Location.Country,
+                    Region: weatherAggregator.weatherPage.requestData.Location.Region,
+                    City: weatherAggregator.weatherPage.requestData.Location.City
                 },
                 DateRange: {    
                     From: new Date(),

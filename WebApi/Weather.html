@@ -39,7 +39,7 @@
                         <div ng-repeat="source in sources">
                             <input type="checkbox" id="site{{source.Id}}" data-sourceId="{{source.Id}}" />
                             <label for="site{{source.Id}}">{{source.Name}}</label>
-                            <span ng-if="source.ForecastMaxDays > 0" class="maxDays">(Максимум {{source.ForecastMaxDays}} дней)</span><br/><br/>
+                            <span ng-if="source.ForecastMaxDays > 0" class="maxDays">(Максимум {{source.ForecastMaxDays|days}})</span><br/><br/>
                             <div class="snippet" ng-bind-html="source.Snippet"></div>
                         </div>
                     </div>
@@ -48,6 +48,8 @@
                     <div class="callout panel" >
                         <div id="map-canvas" style="width:600px;height: 300px; margin-bottom: 10px"></div>
                         <button class="medium success button" ng-click="getWeather()">Посмотреть прогноз</button>
+<!--                        <input  ng-model="subscription.email" type="text" placeholder="E-mail" />
+                        <button class="medium success button" ng-click="subscription.subscribe()">Предупредить о дожде</button>-->
                         <div class="hidden" id="tabsDiv">
                             <ul class="tabs">
                                 <li class="tab-title {{weather.active}}" ng-repeat="weather in weatherModels"><a href="#panel2-{{weather.index}}" id="tabDay{{weather.index}}">{{weather.day}}</a></li>
@@ -108,7 +110,7 @@
         <div class="sky">
             <div class="clouds_one"></div>
 
-        <div class="clouds_two"></div>
+        <!--<div class="clouds_two"></div>-->
 
         <div class="clouds_three"></div>
         </div>
