@@ -14,7 +14,7 @@ function init() {
     var searchControl = new ymaps.control.SearchControl({
         options: {
             kind: 'locality',
-            useMapBounds : true,
+            //useMapBounds : true,
             noSelect: false,
             noPlacemark: true,
             noPopup: false,
@@ -23,9 +23,6 @@ function init() {
     });
     searchControl.events.add('resultshow', function (event) {
         isSearch = true;
-   
-        //var coords = myMap.getCenter();
-        //setPlacemark(coords, false);
     });
 
     searchControl.events.add('load', function (event) {
@@ -40,22 +37,49 @@ function init() {
 
     // Слушаем клик на карте
     myMap.events.add('click', function(e) {
-        var coords = e.get('coords');
-        setPlacemark(coords, false);
-
+        var clickCoords = e.get('coords');
+        setPlacemark(clickCoords, false);
     });
 
     myMap.events.add('boundschange', function(e) {
         if (isSearch) {
-            var coords = e.get('newCenter');
-            setPlacemark(coords, false);
+            var  newCenter = e.get('newCenter');
+            setPlacemark(newCenter, false);
             isSearch = false;
         }
     });
 
-    setPlacemark(defaultPlace, true);
-    setPlaceMartByGeolocation();
+    var storeButton = new ymaps.control.Button({
+        data: {
+            content: 'Запомнить',
+            title: 'Запомнить место'
+        },
+        options: {
+            selectOnClick: false,
+            position : {
+                left: 1,
+                bottom: 1
+            }
 
+        }
+    });
+
+    storeButton.events.add('click', function() {
+        var coordinates = myPlacemark.geometry.getCoordinates();
+        setCookie("longitude", coordinates[0]);
+        setCookie("latitude", coordinates[1]);
+    });
+
+    myMap.controls.add(storeButton);
+
+    
+    var cLng = getCookie("longitude");
+    var cLtd = getCookie("latitude");
+    if (cLng && cLtd) {
+        setPlacemark([cLng, cLtd], true);
+    } else {
+        setPlaceMartByGeolocation();
+    }
 
     function setPlaceMartByGeolocation() {
         ymaps.geolocation.get({
@@ -63,8 +87,8 @@ function init() {
                 mapStateAutoApply: true
             })
             .then(function(result) {
-                var coords = result.geoObjects.position;
-                setPlacemark(coords, true);
+                var position = result.geoObjects.position;
+                setPlacemark(position, true);
             });
 
         ymaps.geolocation.get({
@@ -72,34 +96,34 @@ function init() {
                 mapStateAutoApply: true
             })
             .then(function(result) {
-                var coords = result.geoObjects.position;
-                setPlacemark(coords, true);
+                var position = result.geoObjects.position;
+                setPlacemark(position, true);
             });
     }
 
-    function setPlacemark(coords, centerize) {
+    function setPlacemark(placemarkCoords, centerize) {
         // Если метка уже создана – просто передвигаем ее
         if (myPlacemark) {
-            myPlacemark.geometry.setCoordinates(coords);
+            myPlacemark.geometry.setCoordinates(placemarkCoords);
         }
         // Если нет – создаем.
         else {
-            myPlacemark = createPlacemark(coords);
+            myPlacemark = createPlacemark(placemarkCoords);
             myMap.geoObjects.add(myPlacemark);
 
             // Слушаем событие окончания перетаскивания на метке.
-            myPlacemark.events.add('dragend', function() {
-                getAddress(myPlacemark.geometry.getCoordinates());
-            });
+            //myPlacemark.events.add('dragend', function() {
+            //    getAddress(myPlacemark.geometry.getCoordinates());
+            //});
         }
 
-        storingCoordinates(coords);
+        storingCoordinates(placemarkCoords);
 
-        getAddress(coords);
+        getAddress(placemarkCoords);
 
 
         if (centerize) {
-            myMap.setCenter(coords);
+            myMap.setCenter(placemarkCoords);
         }
         myPlacemark.balloon.close();
         myPlacemark.balloon.open();
@@ -114,16 +138,16 @@ function init() {
             balloonContent: 'поиск...'
         }, {
             preset: 'islands#violetStretchyIcon',
-            draggable: true,
+            //draggable: true,
             balloonPanelMaxMapArea: 0
         });
     };
 
     // Определяем адрес по координатам (обратное геокодирование)
-    function getAddress(coords) {
+    function getAddress(addressCoords) {
         myPlacemark.properties.set('iconContent', 'поиск...');
         myPlacemark.properties.set('balloonContent', 'поиск...');
-        ymaps.geocode(coords).then(function(res) {
+        ymaps.geocode(addressCoords).then(function (res) {
             var firstGeoObject = res.geoObjects.get(0);
             myPlacemark.properties.set({
                 iconContent: firstGeoObject.properties.get('name'),
@@ -134,9 +158,9 @@ function init() {
         });
     };
 
-    function storingCoordinates(coords) {
-        weatherAggregator.weatherPage.requestData.Location.Latitude = coords[0];
-        weatherAggregator.weatherPage.requestData.Location.Longitude = coords[1];
+    function storingCoordinates(storingCoords) {
+        weatherAggregator.weatherPage.requestData.Location.Latitude = storingCoords[0];
+        weatherAggregator.weatherPage.requestData.Location.Longitude = storingCoords[1];
     };
 
     function storingAddressText(firstGeoObject) {
@@ -148,6 +172,17 @@ function init() {
             firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData.AddressDetails.Country.AdministrativeArea.AdministrativeAreaName');
         weatherAggregator.weatherPage.requestData.Location.City =
             firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.SubAdministrativeAreaName');
+    }
+
+    function setCookie(key, value) {
+        var expires = new Date();
+        expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
+        document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+    }
+
+    function getCookie(key) {
+        var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+        return keyValue ? keyValue[2] : null;
     }
 
 }
