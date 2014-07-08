@@ -80,7 +80,6 @@
     toggleDetails: function () {
         var $scope = angular.element($("body")).scope();
         $scope.detailsVisible = !$scope.detailsVisible;
-        event.preventDefault();
     },
 
     getWeather: function () {
