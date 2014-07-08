@@ -3,6 +3,7 @@ defaultPlace = [55.76, 37.64]; // по умолчанию москва
 
 
 function init() {
+    var isSearch = false;
     var myPlacemark,
         myMap = new ymaps.Map('map-canvas', {
             center: defaultPlace,
@@ -10,11 +11,46 @@ function init() {
             controls: ['smallMapDefaultSet']
         });
 
+    var searchControl = new ymaps.control.SearchControl({
+        options: {
+            kind: 'locality',
+            useMapBounds : true,
+            noSelect: false,
+            noPlacemark: true,
+            noPopup: false,
+
+        }
+    });
+    searchControl.events.add('resultshow', function (event) {
+        isSearch = true;
+   
+        //var coords = myMap.getCenter();
+        //setPlacemark(coords, false);
+    });
+
+    searchControl.events.add('load', function (event) {
+        // Проверяем, что это событие не "дозагрузки" результатов и
+        // по запросу найден хотя бы один результат.
+        if (!event.get('skip') && searchControl.getResultsCount()) {
+            searchControl.showResult(0);
+        }
+    });
+
+    myMap.controls.add(searchControl);
+
     // Слушаем клик на карте
     myMap.events.add('click', function(e) {
         var coords = e.get('coords');
         setPlacemark(coords, false);
 
+    });
+
+    myMap.events.add('boundschange', function(e) {
+        if (isSearch) {
+            var coords = e.get('newCenter');
+            setPlacemark(coords, false);
+            isSearch = false;
+        }
     });
 
     setPlacemark(defaultPlace, true);
@@ -94,6 +130,7 @@ function init() {
                 balloonContent: firstGeoObject.properties.get('text')
             });
 
+            storingAddressText(firstGeoObject);
         });
     };
 
@@ -101,5 +138,16 @@ function init() {
         weatherAggregator.weatherPage.requestData.Location.Latitude = coords[0];
         weatherAggregator.weatherPage.requestData.Location.Longitude = coords[1];
     };
+
+    function storingAddressText(firstGeoObject) {
+        weatherAggregator.weatherPage.requestData.Location.AddressText =
+            firstGeoObject.properties.get('text');
+        weatherAggregator.weatherPage.requestData.Location.Country =
+            firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData.AddressDetails.Country.CountryName');
+        weatherAggregator.weatherPage.requestData.Location.Region =
+            firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData.AddressDetails.Country.AdministrativeArea.AdministrativeAreaName');
+        weatherAggregator.weatherPage.requestData.Location.City =
+            firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.SubAdministrativeAreaName');
+    }
 
 }

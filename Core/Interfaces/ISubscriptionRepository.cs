@@ -15,5 +15,6 @@ namespace WeatherAggregator.Core.Interfaces
         string Unsobscribe(string key);
         List<SubscriptionInfo> GetConfirmed();
         void UpdateNotifyDate(SubscriptionInfo subscription);
+        void DeleteExpiredSubscriptions();
     }
 }

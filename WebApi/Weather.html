@@ -48,6 +48,8 @@
                     <div class="callout panel" >
                         <div id="map-canvas" style="width:600px;height: 300px; margin-bottom: 10px"></div>
                         <button class="medium success button" ng-click="getWeather()">Посмотреть прогноз</button>
+                        <input ng-model="subscription.email" type="text" placeholder="E-mail" />
+                        <button class="medium success button" ng-click="subscription.subscribe()">Предупредить о дожде</button>
                         <div class="hidden" id="tabsDiv">
                             <ul class="tabs">
                                 <li class="tab-title {{weather.active}}" ng-repeat="weather in weatherModels"><a href="#panel2-{{weather.index}}" id="tabDay{{weather.index}}">{{weather.day}}</a></li>

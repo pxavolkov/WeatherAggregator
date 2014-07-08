@@ -67,10 +67,7 @@ namespace WeatherAggregator.DataAccess.Mongo
 
         public List<SubscriptionInfo> GetConfirmed()
         {
-            return
-                _mongo.Subscription.AsQueryable()
-                    .Where(s => s.IsConfirmed && (s.LastNotifyDate - DateTime.Now) > new TimeSpan(0, 6, 0))
-                    .ToList();
+            return _mongo.Subscription.AsQueryable().Where(s => s.IsConfirmed && (s.LastNotifyDate - DateTime.Now) > new TimeSpan(0, 6, 0)).ToList();
         }
 
         public void UpdateNotifyDate(SubscriptionInfo subscription)
@@ -85,6 +82,19 @@ namespace WeatherAggregator.DataAccess.Mongo
             updatingSubscription.LastNotifyDate = DateTime.Now;
             //_mongo.Subscription.Update(updatingSubscription);
 
+        }
+
+        public void DeleteExpiredSubscriptions()
+        {
+            List<SubscriptionInfo> expiredSubscriptions = _mongo.Subscription.AsQueryable().Where(s => !s.IsConfirmed).ToList();
+
+            foreach (SubscriptionInfo expiredSubscription in expiredSubscriptions)
+            {
+                if ((DateTime.Now - expiredSubscription.CreatedDate) > new TimeSpan(30, 0, 0))
+                {
+                    //_mongo.Subscription.Remove(subscription);
+                }
+            }
         }
     }
 }

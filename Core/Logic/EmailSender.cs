@@ -9,18 +9,18 @@ namespace WeatherAggregator.Core.Logic
 
         public static void SendEmail(string toEmailAddress, string mailBody)
         {
-            MailMessage mail = new MailMessage();
+            //MailMessage mail = new MailMessage();
 
-            mail.From = new MailAddress(fromEmailAddress);
-            SmtpClient smtp = new SmtpClient();
-            smtp.Port = 465;
-            smtp.UseDefaultCredentials = true;
-            smtp.Host = hostAddress;
-            smtp.EnableSsl = true;
-            mail.To.Add(new MailAddress(toEmailAddress));
-            mail.IsBodyHtml = true;
-            mail.Body = mailBody;
-            smtp.Send(mail);
+            //mail.From = new MailAddress(fromEmailAddress);
+            //SmtpClient smtp = new SmtpClient();
+            //smtp.Port = 465;
+            //smtp.UseDefaultCredentials = true;
+            //smtp.Host = hostAddress;
+            //smtp.EnableSsl = true;
+            //mail.To.Add(new MailAddress(toEmailAddress));
+            //mail.IsBodyHtml = true;
+            //mail.Body = mailBody;
+            //smtp.Send(mail);
         }
     }
 }

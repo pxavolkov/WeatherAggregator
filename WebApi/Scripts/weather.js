@@ -1,7 +1,7 @@
 ﻿weatherAggregator.weatherPage = {
-    requestData: {Location: {} },
+    requestData: { Location: {} },
     initWeatherApp: function() {
-        var weatherApp = angular.module('weatherApp', []).config(function ($sceProvider) {
+        var weatherApp = angular.module('weatherApp', []).config(function($sceProvider) {
             $sceProvider.enabled(false); //Yes, I've disabled it. And I'm happy with it.
         });
 
@@ -13,13 +13,14 @@
                 });
             }, weatherAggregator.weatherPage.onGetWeatherComplete);
 
-            $scope.weatherModels = [{ index: 0 }, { index: 1}, { index: 2 }, { index: 3 }];
+            $scope.weatherModels = [{ index: 0 }, { index: 1 }, { index: 2 }, { index: 3 }];
 
             $scope.getWeather = weatherAggregator.weatherPage.getWeather;
             $scope.feedback = weatherAggregator.weatherPage.feedback;
+            $scope.subscription = weatherAggregator.weatherPage.subscription;
         });
-        
-        $(window).on('beforeunload', function () {
+
+        $(window).on('beforeunload', function() {
             weatherAggregator.weatherPage.saveSourceChecks();
         });
     },
@@ -28,11 +29,23 @@
         email: null,
         name: null,
         text: null,
-        send: function () {
+        send: function() {
             weatherAggregator.proxy.sendFeedback({
                 Email: this.email,
                 Name: this.name,
                 Text: this.text
+            });
+        }
+    },
+
+    subscription: {
+        email: null,
+        subscribe: function () {
+            weatherAggregator.proxy.subscribe({
+                Email: this.email,
+                Latitude: weatherAggregator.weatherPage.requestData.Location.Latitude,
+                Longitude: weatherAggregator.weatherPage.requestData.Location.Longitude,
+                AddressText: weatherAggregator.weatherPage.requestData.Location.AddressText,
             });
         }
     },
@@ -87,7 +100,11 @@
                 Sources: selectedSources,
                 Location: {
                     Latitude: weatherAggregator.weatherPage.requestData.Location.Latitude,
-                    Longitude: weatherAggregator.weatherPage.requestData.Location.Longitude
+                    Longitude: weatherAggregator.weatherPage.requestData.Location.Longitude,
+                    AddressText: weatherAggregator.weatherPage.requestData.Location.AddressText,
+                    Country: weatherAggregator.weatherPage.requestData.Location.Country,
+                    Region: weatherAggregator.weatherPage.requestData.Location.Region,
+                    City: weatherAggregator.weatherPage.requestData.Location.City
                 },
                 DateRange: {
                     From: new Date(),

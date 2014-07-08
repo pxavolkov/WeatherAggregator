@@ -45,5 +45,10 @@ namespace WeatherAggregator.Core.Logic
         {
             _subscriptionRepository.UpdateNotifyDate(subscription);
         }
+
+        public void DeleteExpiredSubscriptions()
+        {
+            _subscriptionRepository.DeleteExpiredSubscriptions();
+        }
     }
 }

@@ -63,6 +63,9 @@ namespace WeatherAggregator.Core
         public void NotifySubscribers()
         {
             var provider = new SubscriptionProvider(_subscriptionRepositoryFactory());
+            
+            provider.DeleteExpiredSubscriptions();
+            
             List<SubscriptionInfo> subscriptions = provider.GetConfirmed();
 
             DateRange dateRange = new DateRange {From = DateTime.Now, To = DateTime.Now.AddDays(3)};
