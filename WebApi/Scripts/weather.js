@@ -1,4 +1,5 @@
 ﻿weatherAggregator.weatherPage = {
+
     requestData: { Location: {} },
     initWeatherApp: function() {
         var weatherApp = angular.module('weatherApp', []).config(function($sceProvider) {
@@ -30,6 +31,7 @@
                     $timeout(weatherAggregator.weatherPage.restoreSourceChecks);
                 });
             }, weatherAggregator.weatherPage.onGetWeatherComplete);
+
 
             $scope.weatherModels = [{ index: 0 }, { index: 1 }, { index: 2 }, { index: 3 }];
             $scope.detailsVisible = false;
