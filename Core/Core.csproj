@@ -51,6 +51,7 @@
     <Compile Include="Entities\SubscriptionInfo.cs" />
     <Compile Include="Entities\Precipitation.cs" />
     <Compile Include="Entities\Settings.cs" />
+    <Compile Include="Entities\SourcedWeather.cs" />
     <Compile Include="Entities\Weather.cs" />
     <Compile Include="Interfaces\ICacheRepository.cs" />
     <Compile Include="Interfaces\IFeedbackRepository.cs" />
