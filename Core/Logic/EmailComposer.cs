@@ -18,6 +18,7 @@ namespace WeatherAggregator.Core.Logic
         private static string UpdateSubscriptionSubject = "Запрос на обновление подписки";
         private static string SubscriptionConfirmedSubject = "Подписка подтверждена";
         private static string UnsubscriptionSubject = "Подписка отменена";
+        private static string NotificationSubject = "Оповещение о дожде";
        
 
 
@@ -38,8 +39,8 @@ namespace WeatherAggregator.Core.Logic
             mail.Subject = ConfirmSubscriptionSubject;
             mail.IsBodyHtml = true;
             mail.Body = string.Format(
-                "Вы подписались в сервисе «Погодный агрегатор» и после подтверждения подписки вы будете получать сообщения о прогнозе дождя в месте {0}.\n\n" +
-                "Чтобы подтвердить подписку, нажмите на <a href=\"{1}{2}?key={3}\">эту ссылку</a>. \n\n" +
+                "Вы подписались в сервисе «Погодный агрегатор» и после подтверждения подписки вы будете получать сообщения о прогнозе дождя в месте {0}.<br>" +
+                "Чтобы подтвердить подписку, нажмите на <a href=\"{1}{2}?key={3}\">эту ссылку</a>. <br>" +
                 "Если вы не подписывались, просто проигнорируйте это письмо",
                 subscription.AddressText, domainName, confirmSubscriptionApi, subscription.Key);
             return mail;
@@ -54,8 +55,8 @@ namespace WeatherAggregator.Core.Logic
             mail.Subject = ConfirmSubscriptionSubject;
             mail.IsBodyHtml = true;
             mail.Body = string.Format(
-                "Вы обновляете адресс для отследивания дождей. Теперь это: {0}.\n\n" +
-                "Чтобы подтвердить это обновление, нажмите на <a href=\"{1}{2}?key={3}\">эту ссылку</a>. \n\n" +
+                "Вы обновляете адресс для отследивания дождей. Теперь это: {0}.<br>" +
+                "Чтобы подтвердить это обновление, нажмите на <a href=\"{1}{2}?key={3}\">эту ссылку</a>. <br>" +
                 "Если вы не не меняли аддресс, просто проигнорируйте это письмо",
                 subscription.AddressText, domainName, confirmSubscriptionApi, subscription.Key);
             return mail;
@@ -70,8 +71,8 @@ namespace WeatherAggregator.Core.Logic
             mail.Subject = SubscriptionConfirmedSubject;
             mail.IsBodyHtml = true;
             mail.Body = string.Format(
-                "Подписка подтверждена. Теперь вы будете получать уведомления когда дождь будет собираться идти в: {0}.\n\n" +
-                "Если вы хотите отписаться от уведомлений, нажмите на <a href=\"{1}{2}?key={3}\">эту ссылку</a>. \n\n",
+                "Подписка подтверждена. Теперь вы будете получать уведомления когда дождь будет собираться идти в: {0}.<br>" +
+                "Если вы хотите отписаться от уведомлений, нажмите на <a href=\"{1}{2}?key={3}\">эту ссылку</a>. <br>",
                 subscription.AddressText, domainName, unsobscribeApi, subscription.Key);
             return mail;
         }
@@ -85,7 +86,7 @@ namespace WeatherAggregator.Core.Logic
             mail.Subject = UnsubscriptionSubject;
             mail.IsBodyHtml = true;
             mail.Body = string.Format(
-                "Подписка на «Погодный агрегатор» отменена \n" +
+                "Подписка на «Погодный агрегатор» отменена<br>" +
                 "Тёплого рождества вам!");
             return mail;
         }
@@ -96,12 +97,12 @@ namespace WeatherAggregator.Core.Logic
             mail.From = new MailAddress(mailFrom);
             mail.To.Add(new MailAddress(subscription.Email));
             mail.IsBodyHtml = true;
-            mail.Subject = UnsubscriptionSubject;
+            mail.Subject = NotificationSubject;
             mail.IsBodyHtml = true;
             string rainDatesMessage = string.Join(", ", rainDates);
             mail.Body = string.Format(
-                "В ближайшее время ожидается дождь. \n" +
-                "Вот даты, года он крайне вероятен:{0}\n" +
+                "В ближайшее время ожидается дождь. <br>" +
+                "Вот даты, года он крайне вероятен:{0}<br>" +
                 "Если вы хотите отписаться от уведомлений, нажмите на <a href=\"{1}{2}?key={3}\">эту ссылку</a>. "
                 , rainDatesMessage, domainName, unsobscribeApi, subscription.Key);
             return mail;
