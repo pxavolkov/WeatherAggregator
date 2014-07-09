@@ -17,17 +17,16 @@ namespace WeatherAggregator.Core.Logic
             _subscriptionRepository = subscriptionRepository;
         }
 
-        public bool Add(SubscriptionInfo subscription)
+        public SubscriptionResponse Add(SubscriptionInfo subscription)
         {
-            bool isSubscriptionExist = _subscriptionRepository.IsExist(subscription.Email);
-            _subscriptionRepository.Add(subscription);
-            return isSubscriptionExist;
+            var response = _subscriptionRepository.Add(subscription);
+            return response;
         }
 
-        public string Confirm(string key)
+        public SubscriptionResponse Confirm(string key)
         {
-            string email = _subscriptionRepository.Confirm(key);
-            return email;
+            var response = _subscriptionRepository.Confirm(key);
+            return response;
         }
 
         public string Unsubscribe(string key)

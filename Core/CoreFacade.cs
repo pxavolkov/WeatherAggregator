@@ -42,22 +42,25 @@ namespace WeatherAggregator.Core
         public void Subscribe(SubscriptionInfo subscription)
         {
             var provider = new SubscriptionProvider(_subscriptionRepositoryFactory());
-            bool isUpdatingSubscription = provider.Add(subscription);
-            EmailSender.SendEmail(subscription.Email, isUpdatingSubscription ? "Subscription Updated" : "Subscription Adde");
+            SubscriptionResponse response = provider.Add(subscription);
+            var emailMessage = EmailComposer.GetConfirmSubscriptionMail(response);
+            EmailSender.SendEmail(emailMessage);
         }
 
         public void ConfirmSubscription(string key)
         {
             var provider = new SubscriptionProvider(_subscriptionRepositoryFactory());
-            string email = provider.Confirm(key);
-            EmailSender.SendEmail(email, "You subscription confirmed");
+            SubscriptionResponse response = provider.Confirm(key);
+            var mail = EmailComposer.GetSubscriptionConfirmedMail(response);
+            EmailSender.SendEmail(mail);
         }
 
         public void Unsubscribe(string key)
         {
             var provider = new SubscriptionProvider(_subscriptionRepositoryFactory());
             string email  = provider.Unsubscribe(key);
-            EmailSender.SendEmail(email, "Good luck!");
+            var emailMessage = EmailComposer.GetUnsubscribenMail(email);
+            EmailSender.SendEmail(emailMessage);
         }
 
         public void NotifySubscribers()
@@ -85,8 +88,8 @@ namespace WeatherAggregator.Core
                 }
                 if (rainDates.Count > 0)
                 {
-                    string rainDatesMessage = string.Join(", ", rainDates);
-                    EmailSender.SendEmail(subscription.Email, rainDatesMessage);
+                    var emailMessage = EmailComposer.GetNotificationMail(subscription, rainDates);
+                    EmailSender.SendEmail(emailMessage);
                     provider.UpdateNotifyDate(subscription);
                 }
             }

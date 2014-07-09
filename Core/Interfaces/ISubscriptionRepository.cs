@@ -9,9 +9,8 @@ namespace WeatherAggregator.Core.Interfaces
 {
     public interface ISubscriptionRepository
     {
-        bool IsExist(string email);
-        void Add(SubscriptionInfo subscription);
-        string Confirm(string key);
+        SubscriptionResponse Add(SubscriptionInfo subscription);
+        SubscriptionResponse Confirm(string key);
         string Unsobscribe(string key);
         List<SubscriptionInfo> GetConfirmed();
         void UpdateNotifyDate(SubscriptionInfo subscription);

@@ -1,26 +1,28 @@
-﻿using System.Net.Mail; 
+﻿using System.Net;
+using System.Net.Mail; 
 
 namespace WeatherAggregator.Core.Logic
 {
     public static class EmailSender
     {
-        private static  string fromEmailAddress = "\"Weather Aggregator\" <WeatherAggregator@mail.com>";
+        private static string fromEmailAddress = @"weatheraggregatortest@gmail.com";
+        private static string password = @"123!@qweQW";
         private static string hostAddress = "smtp.gmail.com";
 
-        public static void SendEmail(string toEmailAddress, string mailBody)
+        public static void SendEmail(MailMessage mail)
         {
-            //MailMessage mail = new MailMessage();
+            using (SmtpClient smtp = new SmtpClient())
+            {
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
 
-            //mail.From = new MailAddress(fromEmailAddress);
-            //SmtpClient smtp = new SmtpClient();
-            //smtp.Port = 465;
-            //smtp.UseDefaultCredentials = true;
-            //smtp.Host = hostAddress;
-            //smtp.EnableSsl = true;
-            //mail.To.Add(new MailAddress(toEmailAddress));
-            //mail.IsBodyHtml = true;
-            //mail.Body = mailBody;
-            //smtp.Send(mail);
+                smtp.Port = 587;
+                smtp.Host = hostAddress;
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.Credentials = new NetworkCredential(fromEmailAddress, password);
+
+                smtp.Send(mail);
+            }
         }
     }
 }
