@@ -1,8 +1,27 @@
 ﻿weatherAggregator.weatherPage = {
+
     requestData: { Location: {} },
     initWeatherApp: function() {
         var weatherApp = angular.module('weatherApp', []).config(function($sceProvider) {
             $sceProvider.enabled(false); //Yes, I've disabled it. And I'm happy with it.
+        });
+
+        //1 день, 2 дня, 3 дня, 4 дня, 5 дней, ..., 10 дней, 11 дней, ..., 20 дней, 21 день, 22 дня, 23 дня, 24 дня, 25 дней...
+        weatherApp.filter('days', function () {
+            return function (input) {
+                var result = 'дней';
+
+                if (input < 10 || input > 20) {
+                    var modulus = input % 10;
+                    if (modulus == 1) {
+                        result = 'день';
+                    } else if (modulus >= 2 && modulus <= 4) {
+                        result = 'дня';
+                    }
+                }
+
+                return input + ' ' + result;
+            };
         });
 
         weatherApp.controller('WeatherController', function($scope, $timeout) {
@@ -12,6 +31,7 @@
                     $timeout(weatherAggregator.weatherPage.restoreSourceChecks);
                 });
             }, weatherAggregator.weatherPage.onGetWeatherComplete);
+
 
             $scope.weatherModels = [{ index: 0 }, { index: 1 }, { index: 2 }, { index: 3 }];
             $scope.detailsVisible = false;
@@ -24,7 +44,7 @@
             $scope.feedback = weatherAggregator.weatherPage.feedback;
             $scope.subscription = weatherAggregator.weatherPage.subscription;
         });
-
+        
         $(window).on('beforeunload', function() {
             weatherAggregator.weatherPage.saveSourceChecks();
         });
@@ -93,7 +113,6 @@
     toggleDetails: function () {
         var $scope = angular.element($("body")).scope();
         $scope.detailsVisible = !$scope.detailsVisible;
-        event.preventDefault();
     },
 
     getWeather: function () {
