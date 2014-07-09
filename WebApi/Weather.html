@@ -48,8 +48,14 @@
                     <div class="callout panel" >
                         <div id="map-canvas" style="width:600px;height: 300px; margin-bottom: 10px"></div>
                         <button class="medium success button" ng-click="getWeather()">Посмотреть прогноз</button>
-                        <input  ng-model="subscription.email" type="email" placeholder="E-mail" required/>
-                        <button class="medium success button" ng-click="subscription.subscribe()">Предупредить о дожде</button>
+                        <form name="notificationForm" ng-submit="subscription.subscribe()">
+                            <input name="email" ng-model="subscription.email" type="email" placeholder="E-mail"/>
+                            <span class="error" ng-show="notificationForm.email.$error.required">
+                                Обязательное поле!</span>
+                            <span class="error" ng-show="notificationForm.email.$error.email">
+                                Не валидный имэйл!</span>
+                            <button type="submit" class="medium success button">Предупредить о дожде</button>
+                        </form>
                         <div class="hidden" id="tabsDiv">
                             <ul class="tabs">
                                 <li class="tab-title {{weather.active}}" ng-repeat="weather in weatherModels"><a href="#panel2-{{weather.index}}" id="tabDay{{weather.index}}">{{weather.day}}</a></li>
