@@ -12,7 +12,7 @@ using WeatherAggregator.Sources.WeatherUa;
 
 namespace Sources
 {
-    public class WeatheruaSource: ISource
+    public class WeatheruaSource//: ISource
     {
 
         private const string SnippetHtml = "<p><a href='http://www.weather.ua/'><img src='http://www.weather.ua/images/logo-weather-ua.gif' alt='Weather.ua логотип' width='253' height='70'><br /></p>";

@@ -1,5 +1,6 @@
 ﻿ymaps.ready(init);
 defaultPlace = [55.76, 37.64]; // по умолчанию москва
+window.weatherAggregator = window.weatherAggregator || { requestData: {Location: {} } };
 
 
 function init() {
@@ -51,8 +52,8 @@ function init() {
 
     var storeButton = new ymaps.control.Button({
         data: {
-            content: 'Запомнить',
-            title: 'Запомнить место'
+            content: 'Remember',
+            title: 'Remember location'
         },
         options: {
             selectOnClick: false,
@@ -159,18 +160,18 @@ function init() {
     };
 
     function storingCoordinates(storingCoords) {
-        weatherAggregator.weatherPage.requestData.Location.Latitude = storingCoords[0];
-        weatherAggregator.weatherPage.requestData.Location.Longitude = storingCoords[1];
+        weatherAggregator.requestData.Location.Latitude = storingCoords[0];
+        weatherAggregator.requestData.Location.Longitude = storingCoords[1];
     };
 
     function storingAddressText(firstGeoObject) {
-        weatherAggregator.weatherPage.requestData.Location.AddressText =
+        weatherAggregator.requestData.Location.AddressText =
             firstGeoObject.properties.get('text');
-        weatherAggregator.weatherPage.requestData.Location.Country =
+        weatherAggregator.requestData.Location.Country =
             firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData.AddressDetails.Country.CountryName');
-        weatherAggregator.weatherPage.requestData.Location.Region =
+        weatherAggregator.requestData.Location.Region =
             firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData.AddressDetails.Country.AdministrativeArea.AdministrativeAreaName');
-        weatherAggregator.weatherPage.requestData.Location.City =
+        weatherAggregator.requestData.Location.City =
             firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.SubAdministrativeAreaName');
     }
 

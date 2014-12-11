@@ -8,7 +8,7 @@
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7611D072-23F2-4476-BA97-7CDDC5FD07C7}</ProjectGuid>
-    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WeatherAggregator.WebApi</RootNamespace>
@@ -116,10 +116,15 @@
     <Content Include="Images\Cloud.png" />
     <Content Include="Images\Sun.png" />
     <Content Include="Images\SunCloud.png" />
+    <Content Include="Scripts\config.js" />
+    <Content Include="Scripts\constants.js" />
+    <Content Include="Scripts\directives\ngFocus.js" />
     <Content Include="Scripts\gmap.js" />
     <Content Include="Scripts\weather.js" />
-    <Content Include="Scripts\weather.proxy.js" />
-    <Content Include="Scripts\weather.utils.js" />
+    <Content Include="Scripts\weatherController.js" />
+    <Content Include="Scripts\weatherHttpInterceptor.js" />
+    <Content Include="Scripts\weatherService.js" />
+    <Content Include="Scripts\weatherUtils.js" />
     <Content Include="Scripts\ymap.js" />
     <Content Include="Styles\montanaflynn.css" />
     <Content Include="Styles\weather.css" />
